@@ -56,14 +56,6 @@ const ChatList = () => {
                         </>
                     );
                 })}
-                {/* <ChatCard />
-                <ChatCard />
-                <ChatCard isGroup={true} />
-                <ChatCard isGroup={true} />
-                <ChatCard isGroup={true} />
-                <ChatCard isGroup={true} />
-                <ChatCard isGroup={true} />
-                <ChatCard isGroup={true} /> */}
             </div>
         </>
     );

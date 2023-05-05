@@ -56,10 +56,8 @@ export const messageSlice = createSlice({
         },
 
         setMessages: (state, action) => {
-            const { reset, messages } = action.payload;
-            if (reset) {
-                state.value.messages = messages;
-            } else state.value.messages.push(messages);
+            const { messages } = action.payload;
+            state.value.messages = [...state.value.messages, ...messages];
         },
         resetMessages: (state) => {
             state.value.messages = [];

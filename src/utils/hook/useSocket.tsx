@@ -1,6 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setVerify, setMessages, setNewestMessage } from "@/app/Slices/message";
+import {
+    setVerify,
+    setMessages,
+    setNewestMessage,
+    setChatRooms,
+} from "@/app/Slices/message";
 import { RootState } from "@/app/store";
 
 const useSocket = (url: string) => {
@@ -40,10 +45,13 @@ const useSocket = (url: string) => {
                 source,
                 recevierId,
                 userId,
+                result,
             } = message;
 
             if (type === "verify") {
                 dispatch(setVerify(message));
+                if (result === true)
+                    dispatch(setChatRooms({ rooms: [message] }));
             } else if (type === "join") {
                 if (roomId !== undefined) {
                     if (socket.readyState === WebSocket.OPEN) {
@@ -60,7 +68,7 @@ const useSocket = (url: string) => {
                 }
             } else {
                 if (currentRoomRef.current === roomId)
-                    dispatch(setMessages({ messages: message }));
+                    dispatch(setMessages({ messages: [message] }));
                 dispatch(
                     setNewestMessage({
                         newestMessage: message,

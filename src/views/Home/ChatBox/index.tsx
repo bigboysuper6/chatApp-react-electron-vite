@@ -45,14 +45,7 @@ const ChatBox = () => {
         const messages = await getMessage({ roomId, userId }).then((res) => {
             return res.data.messages;
         });
-        // const value = messages.map((item: any) => {
-        //     return extractAttributes(item, [
-        //         "roomId",
-        //         "content",
-        //         "userId",
-        //         "createdAt",
-        //     ]);
-        // });
+        console.log(messages);
         dispatch(setMessages({ messages }));
     };
 

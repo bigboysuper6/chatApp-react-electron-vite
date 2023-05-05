@@ -10,7 +10,7 @@ const ChatBody = ({ userId }: ChatBodyProps) => {
     const messages = useSelector<RootState, any[]>((state) => {
         return state.message.value.messages;
     });
-
+    console.log(messages);
     return (
         <>
             <div className="chat-body hidden-overflow">

@@ -36,6 +36,16 @@ const NotificationList = () => {
                 <h2 className="fw-bold">通知</h2>
                 <Search />
                 {verify.map((item: verifyInterface, index: number) => {
+                    let result;
+                    if (item.userId === userId && item.result) {
+                        result = "recevierAgree";
+                    } else if (item.userId === userId && item.result !== null) {
+                        result = "recevierRefuse";
+                    } else if (userId === item.userId) {
+                        result = "sender";
+                    } else {
+                        result = item.result;
+                    }
                     return (
                         <>
                             <ChatCard
@@ -49,9 +59,11 @@ const NotificationList = () => {
                                 name={item.name}
                                 time={item.time}
                                 theResult={
-                                    item.userId === userId
-                                        ? "sender"
-                                        : item.result
+                                    result as
+                                        | boolean
+                                        | "sender"
+                                        | "recevierAgree"
+                                        | "recevierRefuse"
                                 }
                                 roomId={item.roomId}
                                 recevierId={item.recevierId}

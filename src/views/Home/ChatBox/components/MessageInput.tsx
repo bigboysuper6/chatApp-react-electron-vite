@@ -26,7 +26,6 @@ const MessageInput = () => {
             message: "",
         },
     });
-    const { handleMessages } = useContext(ChatFooterContext);
     const { socket } = useContext(ChatBoxContext);
 
     const roomId: string = useSelector<RootState, string>((state) => {
@@ -38,7 +37,6 @@ const MessageInput = () => {
     });
 
     const handleSend = (data: string) => {
-        console.log(socket.readyState);
         if (socket.readyState === WebSocket.OPEN) {
             console.log("发送message");
             socket.send(
@@ -57,6 +55,7 @@ const MessageInput = () => {
     const onSubmit = (data: any) => {
         if (data.message !== "") {
             handleSend(data.message);
+
             reset({ message: "" });
         }
     };

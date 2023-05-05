@@ -15,7 +15,7 @@ type ChatCardProps = {
     text: string;
     name: string;
     time: string;
-    theResult?: boolean | "sender";
+    theResult?: boolean | "sender" | "recevierAgree" | "recevierRefuse";
     roomId: string;
     onClick?: () => void;
     recevierId?: string;
@@ -111,31 +111,29 @@ const ChatCard = ({
                 {isNotification === true && (
                     <CardFooter className="px-4">
                         <Row>
-                            {result === "sender"
-                                ? ""
-                                : result ?? (
-                                      <>
-                                          <Col>
-                                              <a
-                                                  onClick={onClickRefuse}
-                                                  className="btn btn-sm w-100 chat-footer-hide border-radius border-0 py-2"
-                                              >
-                                                  拒绝
-                                              </a>
-                                          </Col>
-                                          <Col>
-                                              <a
-                                                  onClick={onClickAgree}
-                                                  className="btn btn-sm btn-primary w-100 border-radius border-0 py-2"
-                                              >
-                                                  同意
-                                              </a>
-                                          </Col>
-                                      </>
-                                  )}
+                            {result === null && (
+                                <>
+                                    <Col>
+                                        <a
+                                            onClick={onClickRefuse}
+                                            className="btn btn-sm w-100 chat-footer-hide border-radius border-0 py-2"
+                                        >
+                                            拒绝
+                                        </a>
+                                    </Col>
+                                    <Col>
+                                        <a
+                                            onClick={onClickAgree}
+                                            className="btn btn-sm btn-primary w-100 border-radius border-0 py-2"
+                                        >
+                                            同意
+                                        </a>
+                                    </Col>
+                                </>
+                            )}
                             {result === true && (
                                 <>
-                                    <Col className="text-center text-primary w-100 border-radius border-0 py-2">
+                                    <Col className="text-center text-success w-100 border-radius border-0 py-2">
                                         已同意
                                     </Col>
                                 </>
@@ -149,8 +147,22 @@ const ChatCard = ({
                             )}
                             {result === "sender" && (
                                 <>
-                                    <Col className="text-center text-warning w-100 border-radius border-0 py-2">
+                                    <Col className="text-center text-primary w-100 border-radius border-0 py-2">
                                         已发送
+                                    </Col>
+                                </>
+                            )}
+                            {result === "recevierAgree" && (
+                                <>
+                                    <Col className="text-center text-success w-100 border-radius border-0 py-2">
+                                        已同意您的邀请
+                                    </Col>
+                                </>
+                            )}
+                            {result === "recevierRefuse" && (
+                                <>
+                                    <Col className="text-center text-danger w-100 border-radius border-0 py-2">
+                                        已拒绝您的邀请
                                     </Col>
                                 </>
                             )}
