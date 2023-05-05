@@ -1,0 +1,21 @@
+@use "@sass/module/color";
+
+.message {
+    .message-body {
+        max-width: 45%;
+        .message-text {
+            padding: 0 1.25rem;
+            background-color: color.$message-background-color;
+            color: color.$nav-color;
+            border-radius: 0.6rem;
+        }
+        .message-background-color {
+            background-color: color.$round-background-color;
+            color: white;
+        }
+        .message-time-text {
+            margin-top: 4px;
+            color: color.$nav-color;
+        }
+    }
+}

@@ -1,0 +1,4 @@
+@use "@sass/module/components";
+.avatar {
+    @include components.avatar(44px);
+}

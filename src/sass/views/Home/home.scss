@@ -1,0 +1,61 @@
+@use "@sass/module/color";
+@use "./ChatList/components/chat-card.scss";
+@use "./ChatBox/chat-header.scss";
+@use "./ChatBox/chat-body.scss";
+@use "./ChatBox/chat-footer.scss";
+@use "./ChatInfo/chat-info-header.scss";
+@use "./ChatInfo/chat-info-body.scss";
+@use "./Support/support-card.scss";
+@use "./SettingList/setting-card-group.scss";
+
+.home-grid-template-columns-3 {
+    grid-template-columns: 100px 410px auto;
+}
+.home-grid-template-columns-4 {
+    grid-template-columns: 100px 410px auto 410px;
+}
+
+.home {
+    overflow: hidden;
+    .nav-bar {
+        padding: 24px 0;
+        height: 100vh;
+        color: color.$nav-color;
+        .nav-item {
+            height: 60px;
+            line-height: 60px;
+        }
+    }
+
+    .chat-list {
+        width: inherit;
+        height: 100vh;
+        padding-top: 1.75rem;
+        padding-bottom: 1.75rem;
+        h2 {
+            font-size: 1.375rem;
+            margin-bottom: 1.75rem;
+        }
+    }
+
+    .chat-box {
+        padding: 0 1.25rem;
+        height: 100vh;
+    }
+
+    .chat-info {
+        padding: 0 1.25rem;
+        height: 100vh;
+        width: 410px;
+    }
+    .create-group-chat {
+        width: inherit;
+        height: 100vh;
+        padding-top: 1.75rem;
+        padding-bottom: 1.75rem;
+        h2 {
+            font-size: 1.375rem;
+            margin-bottom: 1.75rem;
+        }
+    }
+}

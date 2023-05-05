@@ -1,0 +1,67 @@
+@use "@sass/module/_color";
+
+$height: 68px;
+$half-height: $height/2;
+$border-white: 3px white solid;
+$add-size: 1em;
+
+.envelope {
+    background-color: yellow;
+    border-radius: 0.6rem;
+}
+
+.envelope-title {
+    width: inherit;
+    svg {
+        border-radius: 0.6rem;
+        color: color.$round-background-color;
+    }
+    .envelop-user-name {
+        bottom: $half-height;
+    }
+    .envelop-svg {
+        box-sizing: content-box;
+        height: $height;
+        width: $height;
+        border: $border-white;
+        background-color: color.$round-background-color;
+        bottom: $half-height;
+        svg {
+            color: white;
+        }
+        .avatar {
+            width: 70px;
+            height: 70px;
+        }
+        .envelop-img-svg {
+            line-height: $height;
+        }
+        .envelop-add-svg {
+            border: $border-white;
+            background-color: color.$round-background-color;
+            padding: 0px 3px 2px 3px;
+            right: $add-size/-2;
+            svg {
+                width: 1em;
+                height: 1em;
+            }
+        }
+    }
+}
+
+.envelop-body {
+    .create-group-form {
+        color: color.$nav-color;
+        padding: 1.25rem 1.5rem;
+        .form-control {
+            background-color: color.$input-background-color;
+            border: 0;
+            padding: 1rem 1.25rem;
+            border-radius: 0.6rem;
+        }
+        textarea {
+            resize: none;
+            border-radius: 0.6rem;
+        }
+    }
+}

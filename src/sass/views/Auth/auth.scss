@@ -1,0 +1,11 @@
+@use "@sass/module/color";
+.auth {
+    height: 100vh;
+    .auth-card {
+        width: 30rem;
+        background-color: inherit;
+        .auth-component {
+            background-color: white;
+        }
+    }
+}

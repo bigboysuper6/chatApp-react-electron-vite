@@ -1,0 +1,20 @@
+@use "@sass/module/color";
+.tool-tip-content {
+    right: 1.5rem;
+    background-color: color.$friend-background-color;
+    .tool-tip-ul {
+        width: 10rem;
+        box-shadow: 0 0.5rem 1.875rem rgb(0, 0, 0, 0.05);
+        padding: 0.5rem;
+
+        li {
+            margin: 1rem 0;
+            font-size: 1rem;
+            list-style: none;
+            svg {
+                width: 20px;
+                height: 20px;
+            }
+        }
+    }
+}

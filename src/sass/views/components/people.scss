@@ -1,0 +1,30 @@
+@use "@sass/module/color";
+@use "@sass/module/components";
+.people {
+    padding: 1.25rem 0;
+    .owner-text {
+        color: color.$round-background-color;
+    }
+    .chat-info-row {
+        .avatar {
+            @include components.avatar(34px);
+        }
+        .group-member-count {
+            line-height: 34px;
+        }
+    }
+}
+
+.people-group {
+    border-radius: 0.6rem;
+    background-color: white;
+    .people-group-select-input {
+        width: 1.25em;
+        height: 1.25em;
+        border-radius: 30%;
+    }
+    .people-group-select-input:focus {
+        outline: none;
+        box-shadow: none;
+    }
+}

@@ -1,0 +1,7 @@
+@use "@sass/module/color";
+
+.details-button {
+    background-color: color.$round-background-color;
+    color: white;
+    font-size: 1rem;
+}

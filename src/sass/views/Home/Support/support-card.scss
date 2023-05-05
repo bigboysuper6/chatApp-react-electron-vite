@@ -1,0 +1,33 @@
+@use "@sass/module/color";
+
+.support-card {
+    .support-card-body {
+        padding: 1.25rem 1.5rem;
+        background-color: color.$friend-background-color;
+        .support-card-a {
+            background-color: color.$round-background-color;
+            color: color.$friend-background-color;
+            padding: 7px 12px 9px 12px;
+            svg {
+                width: 16px;
+                height: 16px;
+            }
+        }
+    }
+    .support-card-footer {
+        background-color: color.$friend-background-color;
+        button {
+            background-color: color.$round-background-color;
+        }
+        .support-card-footer-form {
+            color: color.$nav-color;
+
+            .form-control {
+                background-color: color.$input-background-color;
+                border: 0;
+                padding: 1rem 1.25rem;
+                border-radius: 0.6rem;
+            }
+        }
+    }
+}

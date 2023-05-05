@@ -1,0 +1,25 @@
+@use "@sass/module/color";
+
+.search {
+    border-radius: 0.6rem;
+    height: 56px;
+
+    margin-bottom: 1.25rem;
+    .input-group-text {
+        padding: 0.59375rem 1.125rem;
+        background-color: color.$input-background-color;
+        border: 0;
+        svg {
+            color: color.$input-color;
+            height: 1.125rem;
+        }
+    }
+    .form-control {
+        background-color: color.$input-background-color;
+        border: 0;
+    }
+    .form-control:focus {
+        outline: none;
+        box-shadow: none;
+    }
+}

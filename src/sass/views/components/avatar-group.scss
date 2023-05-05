@@ -1,0 +1,14 @@
+@use "@sass/module/components";
+@use "@sass/module/base";
+
+.chat-info-row {
+    .avatar {
+        margin-left: -0.6rem;
+        @include components.avatar(26px);
+    }
+    .group-member-count {
+        background-color: #2787f5;
+        color: white;
+        text-align: center;
+    }
+}

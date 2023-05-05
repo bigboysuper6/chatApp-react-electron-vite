@@ -1,0 +1,22 @@
+@use "@sass/module/color";
+
+.modal {
+    .modal-content {
+        border: 0;
+        border-radius: 0.8rem;
+        background-color: color.$input-background-color;
+    }
+    .modal-footer {
+        background-color: white;
+        border-bottom-right-radius: 0.8rem;
+        border-bottom-left-radius: 0.8rem;
+    }
+    .modal-header {
+        background-color: white;
+        border-top-right-radius: 0.8rem;
+        border-top-left-radius: 0.8rem;
+    }
+    .modal-body {
+        background-color: white;
+    }
+}

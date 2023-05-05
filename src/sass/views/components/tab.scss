@@ -1,0 +1,16 @@
+@use "@sass/module/color";
+
+.tab {
+    color: color.$nav-color;
+    background-color: color.$message-input-background-color;
+    border-radius: 0.6rem;
+    padding: 0.3125rem;
+    .nav-item {
+        padding: 0.75rem;
+    }
+    .active {
+        background-color: white;
+        border-radius: 0.6rem;
+        color: black;
+    }
+}

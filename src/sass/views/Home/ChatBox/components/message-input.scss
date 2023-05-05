@@ -1,0 +1,27 @@
+@use "@sass/module/color";
+
+.message-input {
+    span {
+        color: color.$nav-color;
+        border: 0;
+    }
+    background-color: color.$message-input-background-color;
+    .form-control {
+        background-color: inherit;
+        border: 0;
+    }
+    .form-control:focus {
+        outline: none;
+        box-shadow: none;
+    }
+    .send-message {
+        background-color: color.$round-background-color;
+        color: white;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+    }
+    svg {
+        width: 16px;
+        height: 16px;
+    }
+}

@@ -1,0 +1,108 @@
+@use "./views/Home/home.scss";
+@use "./views/Auth/auth.scss";
+@use "@sass/views/components/avatar.scss";
+@use "@sass/views/components/chat-info-row.scss";
+@use "@sass/views/components/search.scss";
+@use "@sass/views/components/people.scss";
+@use "@sass/views/components/tab.scss";
+@use "@sass/views/components/envelope.scss";
+@use "@sass/views/components/button.scss";
+@use "@sass/views/components/media.scss";
+@use "@sass/views/components/avatar-group.scss";
+@use "@sass/views/components/tool-tip.scss";
+@use "@sass/views/components/modal.scss";
+@use "@sass/module/color";
+@use "@sass/module/base";
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  overflow: hidden;
+  color-scheme: light dark;
+  color: black;
+  // background-color: #242424;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-size: 15px;
+  letter-spacing: -0.01em;
+}
+
+.text-hidden-one {
+  @include base.text-hidden(1);
+}
+
+.border-top,
+.border-right,
+.border-left,
+.border-bottom {
+  border-bottom: 2px solid #f5f8fb !important;
+}
+
+.border-left {
+  border-left: 2px solid #f5f8fb !important;
+}
+
+.hidden-overflow {
+  overflow: hidden auto;
+}
+.hidden-overflow::-webkit-scrollbar {
+  display: none;
+}
+
+.text-color {
+  color: color.$nav-color;
+}
+
+.active {
+  color: color.$round-background-color;
+}
+
+.border-radius {
+  border-radius: 0.6rem;
+}
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #293951;
+}
+
+h4 {
+  font-size: 1rem;
+}
+
+.form {
+  color: color.$nav-color;
+  padding: 1.25rem 1.5rem;
+  .form-control {
+    background-color: color.$input-background-color;
+    border: 0;
+    padding: 1rem 1.25rem;
+    border-radius: 0.6rem;
+  }
+}
+
+.form-control:focus {
+  outline: none;
+  box-shadow: none;
+}

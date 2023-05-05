@@ -1,0 +1,10 @@
+@use "@sass/module/base";
+@use "@sass/module/components";
+@use "@sass/module/color";
+
+.chat-info-header {
+    .svg-content {
+        height: 54.5px;
+        color: color.$nav-color;
+    }
+}

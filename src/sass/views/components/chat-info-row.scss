@@ -1,0 +1,6 @@
+@use "@sass/module/components";
+@use "@sass/module/base";
+
+.group-name {
+    @include base.text-hidden(1);
+}

@@ -1,0 +1,43 @@
+@use "@sass/module/base";
+@use "@sass/module/color";
+
+.chat-card {
+    width: inherit;
+    border-radius: 0.6rem;
+    border: 0;
+    .card-body {
+        padding: 1.25rem 0;
+        .extra-small {
+            font-size: 0.665rem;
+            color: color.$nav-color;
+        }
+        h5 {
+            line-height: 1.5;
+            font-size: 0.9375rem;
+        }
+        .message-text {
+            @include base.text-hidden(1);
+            width: 70%;
+            color: color.$nav-color;
+        }
+        .message-count {
+            font-size: 0.8rem;
+            color: white;
+            padding: 0 0.3rem;
+            background-color: #2787f5;
+        }
+        svg {
+            width: 16px;
+            height: 16px;
+        }
+    }
+    .card-footer {
+        padding: 0.75rem 0;
+        background-color: transparent;
+        border-top: 1.6px solid #f5f8fb;
+        .chat-footer-hide {
+            color: color.$notification-a-color;
+            background-color: color.$notification-a-background-color;
+        }
+    }
+}
