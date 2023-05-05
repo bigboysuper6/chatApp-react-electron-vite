@@ -44,7 +44,6 @@ const ChatCard = ({
     //need check
     const onClickAgree = useCallback(async () => {
         setResult(true);
-
         const verify = await sendVerifyResult({
             result: true,
             roomId,
@@ -58,8 +57,6 @@ const ChatCard = ({
         if (socket.readyState === WebSocket.OPEN) {
             socket.send(JSON.stringify({ ...verify, type: "verify" }));
         }
-
-        dispatch(setChatRooms({ rooms: [verify] }));
     }, []);
 
     const onClickRefuse = useCallback(async () => {
