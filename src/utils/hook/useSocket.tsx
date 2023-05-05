@@ -17,8 +17,7 @@ const useSocket = (url: string) => {
         return state.user.value.userInfo._id;
     });
     const currentRoomRef = useRef<string>(currentRoom);
-    const userIndexRef = useRef<string>(currentRoom);
-    const retryTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const userIndexRef = useRef<string>(userIndex);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -86,36 +85,20 @@ const useSocket = (url: string) => {
 
         const handleClose = (event: any) => {
             console.log("WebSocket disconnected");
-            // reconnect();
         };
 
         const handleError = (event: any) => {
             console.error("WebSocket error:", event.error);
-            // reconnect();
         };
         socket.addEventListener("open", handleOpen);
         socket.addEventListener("message", handleMessage);
         socket.addEventListener("close", handleClose);
         socket.addEventListener("error", handleError);
-        console.log(socket.readyState);
 
-        // return () => {
-        //     if (retryTimeoutRef.current) {
-        //         clearTimeout(retryTimeoutRef.current);
-        //     }
-        // };
-    }, [socket]);
-
-    const reconnect = () => {
-        if (retryTimeoutRef.current) {
-            clearTimeout(retryTimeoutRef.current);
-        }
-        retryTimeoutRef.current = setTimeout(() => {
-            console.error("重新连接中");
-            const ws = new WebSocket(url);
-            setSocket(ws);
-        }, 1000);
-    };
+        return () => {
+            socket.close();
+        };
+    }, []);
 
     return [socket];
 };
