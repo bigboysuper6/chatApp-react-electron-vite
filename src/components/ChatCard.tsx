@@ -56,7 +56,7 @@ const ChatCard = ({
         }
 
         if (socket.readyState === WebSocket.OPEN) {
-            socket.send(JSON.stringify(verify));
+            socket.send(JSON.stringify({ ...verify, type: "verify" }));
         }
 
         dispatch(setChatRooms({ rooms: [verify] }));
@@ -69,6 +69,10 @@ const ChatCard = ({
             roomId,
             recevierId,
         }).then((res) => res.data.verify);
+
+        if (socket.readyState === WebSocket.OPEN) {
+            socket.send(JSON.stringify({ ...verify, type: "verify" }));
+        }
     }, []);
 
     return (
