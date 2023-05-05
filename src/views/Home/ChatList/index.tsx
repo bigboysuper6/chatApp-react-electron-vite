@@ -23,7 +23,7 @@ const ChatList = () => {
             const verify = res.data.roomsAgree;
             return verify;
         });
-        dispatch(setChatRooms(rooms));
+        dispatch(setChatRooms({ rooms, reset: true }));
     };
 
     const handleClick = (roomId: string) => {

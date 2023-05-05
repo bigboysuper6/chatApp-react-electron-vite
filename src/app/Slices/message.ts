@@ -29,15 +29,10 @@ export const messageSlice = createSlice({
         },
 
         setChatRooms: (state, action) => {
-            const room =
-                action.payload instanceof Array
-                    ? action.payload
-                    : [action.payload];
-            if (room)
-                state.value.chatRooms = deduplicatedArray(
-                    state.value.chatRooms,
-                    room
-                );
+            const { rooms, reset } = action.payload;
+            const firstParam = reset ? [] : state.value.chatRooms;
+            if (rooms)
+                state.value.chatRooms = deduplicatedArray(firstParam, rooms);
         },
 
         setNewestMessage: (state, action) => {

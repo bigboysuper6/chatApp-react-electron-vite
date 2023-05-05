@@ -10,16 +10,17 @@ import { RootState } from "@/app/store";
 
 const useSocket = (url: string) => {
     const [socket, setSocket] = useState(new WebSocket(url));
-
     const currentRoom = useSelector<RootState, string>((state) => {
         return state.message.value.currentRoom;
     });
     const currentRoomRef = useRef<string>(currentRoom);
-
+    const retryTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const dispatch = useDispatch();
+
     useEffect(() => {
         currentRoomRef.current = currentRoom;
     }, [currentRoom]);
+
     useEffect(() => {
         const handleOpen = (event: any) => {
             console.log("WebSocket connected open");
@@ -83,20 +84,36 @@ const useSocket = (url: string) => {
 
         const handleClose = (event: any) => {
             console.log("WebSocket disconnected");
+            reconnect();
         };
 
         const handleError = (event: any) => {
             console.error("WebSocket error:", event.error);
-            alert("WebSocket error: " + event.error);
+            reconnect();
         };
         socket.addEventListener("open", handleOpen);
         socket.addEventListener("message", handleMessage);
         socket.addEventListener("close", handleClose);
         socket.addEventListener("error", handleError);
+        console.log(socket.readyState);
+
         return () => {
-            socket.close();
+            if (retryTimeoutRef.current) {
+                clearTimeout(retryTimeoutRef.current);
+            }
         };
     }, [socket]);
+
+    const reconnect = () => {
+        if (retryTimeoutRef.current) {
+            clearTimeout(retryTimeoutRef.current);
+        }
+        retryTimeoutRef.current = setTimeout(() => {
+            console.error("重新连接中");
+            const ws = new WebSocket(url);
+            setSocket(ws);
+        }, 1000);
+    };
 
     return [socket];
 };

@@ -59,7 +59,7 @@ const ChatCard = ({
             socket.send(JSON.stringify(verify));
         }
 
-        dispatch(setChatRooms(verify));
+        dispatch(setChatRooms({ rooms: [verify] }));
     }, []);
 
     const onClickRefuse = useCallback(async () => {
