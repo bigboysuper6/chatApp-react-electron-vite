@@ -6,7 +6,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/app/store";
 import { extractAttributes } from "@/utils/utils";
 import { createContext, useEffect, useState } from "react";
-import { setNewestMessage, setMessages } from "@/app/Slices/message";
+import {
+    setNewestMessage,
+    setMessages,
+    resetMessages,
+} from "@/app/Slices/message";
 export const ChatFooterContext = createContext<any>({});
 
 const ChatBox = () => {
@@ -23,6 +27,9 @@ const ChatBox = () => {
 
     useEffect(() => {
         if (roomId) getTheMessage();
+        return () => {
+            dispatch(resetMessages());
+        };
     }, [roomId]);
 
     useEffect(() => {
@@ -46,8 +53,7 @@ const ChatBox = () => {
         //         "createdAt",
         //     ]);
         // });
-
-        dispatch(setMessages({ messages, reset: true }));
+        dispatch(setMessages({ messages }));
     };
 
     const handleMessages = (data: any) => {

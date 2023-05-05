@@ -1,11 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-    setVerify,
-    setRoomId,
-    setMessages,
-    setNewestMessage,
-} from "@/app/Slices/message";
+import { setVerify, setMessages, setNewestMessage } from "@/app/Slices/message";
 import { RootState } from "@/app/store";
 
 const useSocket = (url: string) => {
@@ -62,13 +57,6 @@ const useSocket = (url: string) => {
                             })
                         );
                     }
-                    dispatch(
-                        setRoomId({
-                            roomId,
-                            recevierId,
-                            userId,
-                        })
-                    );
                 }
             } else {
                 if (currentRoomRef.current === roomId)

@@ -5,7 +5,6 @@ export const messageSlice = createSlice({
     initialState: {
         value: {
             verify: [] as any,
-            roomId: [] as any,
             chatRooms: [] as any,
             currentRoom: "" as string,
             messages: [] as any,
@@ -20,19 +19,21 @@ export const messageSlice = createSlice({
                 ]);
         },
 
-        setRoomId: (state, action) => {
-            const room = action.payload;
-            if (room)
-                state.value.roomId = deduplicatedArray(state.value.roomId, [
-                    room,
-                ]);
+        resetVerify: (state) => {
+            state.value.verify = [];
         },
 
         setChatRooms: (state, action) => {
-            const { rooms, reset } = action.payload;
-            const firstParam = reset ? [] : state.value.chatRooms;
+            const { rooms } = action.payload;
             if (rooms)
-                state.value.chatRooms = deduplicatedArray(firstParam, rooms);
+                state.value.chatRooms = deduplicatedArray(
+                    state.value.chatRooms,
+                    rooms
+                );
+        },
+
+        resetChatRooms: (state) => {
+            state.value.chatRooms = [];
         },
 
         setNewestMessage: (state, action) => {
@@ -60,16 +61,21 @@ export const messageSlice = createSlice({
                 state.value.messages = messages;
             } else state.value.messages.push(messages);
         },
+        resetMessages: (state) => {
+            state.value.messages = [];
+        },
     },
 });
 
 export const {
     setVerify,
-    setRoomId,
+    resetVerify,
+    resetMessages,
     setChatRooms,
     setCurrentRoom,
     setNewestMessage,
     setMessages,
+    resetChatRooms,
 } = messageSlice.actions;
 
 export default messageSlice.reducer;

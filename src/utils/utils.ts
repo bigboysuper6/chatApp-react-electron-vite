@@ -72,6 +72,7 @@ const extractAttributes = (object: data, name: any[]) => {
 const deduplicatedArray = (array: any[], updateData: any[]) => {
     const newArray = [...array, ...updateData];
     const result = Array.from(new Set(newArray));
+    console.log(result);
     return result;
 };
 

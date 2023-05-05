@@ -1,7 +1,11 @@
 import Search from "../../../components/Search";
 import ChatCard from "../../../components/ChatCard";
 import { useSelector, useDispatch } from "react-redux";
-import { setChatRooms, setCurrentRoom } from "@/app/Slices/message";
+import {
+    setChatRooms,
+    setCurrentRoom,
+    resetChatRooms,
+} from "@/app/Slices/message";
 import { getRooms } from "@/api/message";
 import { useEffect, useContext } from "react";
 import { AsideContext } from "..";
@@ -16,6 +20,9 @@ const ChatList = () => {
 
     useEffect(() => {
         if (userId) getTheRooms();
+        return () => {
+            dispatch(resetChatRooms());
+        };
     }, [userId]);
 
     const getTheRooms = async () => {
@@ -23,7 +30,7 @@ const ChatList = () => {
             const verify = res.data.roomsAgree;
             return verify;
         });
-        dispatch(setChatRooms({ rooms, reset: true }));
+        dispatch(setChatRooms({ rooms }));
     };
 
     const handleClick = (roomId: string) => {

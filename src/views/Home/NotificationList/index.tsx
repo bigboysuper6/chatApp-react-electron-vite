@@ -3,7 +3,7 @@ import ChatCard from "@/components/ChatCard";
 import { useSelector, useDispatch } from "react-redux";
 import { getVerify } from "@/api/message";
 import { useEffect } from "react";
-import { setVerify } from "@/app/Slices/message";
+import { setVerify, resetVerify } from "@/app/Slices/message";
 
 const NotificationList = () => {
     const { verify } = useSelector((state: any) => state.message.value);
@@ -16,6 +16,9 @@ const NotificationList = () => {
 
     useEffect(() => {
         if (userId) getTheVerify();
+        return () => {
+            dispatch(resetVerify());
+        };
     }, [userId]);
 
     const getTheVerify = async () => {
