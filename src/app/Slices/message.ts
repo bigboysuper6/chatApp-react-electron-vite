@@ -25,6 +25,7 @@ export const messageSlice = createSlice({
 
         setChatRooms: (state, action) => {
             const { rooms } = action.payload;
+            console.log(rooms);
             if (rooms)
                 state.value.chatRooms = deduplicatedArray(
                     state.value.chatRooms,

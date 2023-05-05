@@ -57,6 +57,7 @@ const ChatCard = ({
         if (socket.readyState === WebSocket.OPEN) {
             socket.send(JSON.stringify({ ...verify, type: "verify" }));
         }
+        dispatch(setChatRooms({ rooms: [verify] }));
     }, []);
 
     const onClickRefuse = useCallback(async () => {

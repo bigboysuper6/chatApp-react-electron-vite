@@ -53,6 +53,7 @@ const useSocket = (url: string) => {
             } = message;
 
             if (type === "verify") {
+                console.log(message);
                 if (recevierId !== userIndexRef.current)
                     dispatch(setVerify(message));
                 if (result === true)
