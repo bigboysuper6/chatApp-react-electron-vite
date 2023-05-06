@@ -6,7 +6,9 @@ import {
     setNewestMessage,
     setChatRooms,
 } from "@/app/Slices/message";
+import { setUserInfo } from "@/app/Slices/user";
 import { RootState } from "@/app/store";
+import { details } from "@/api/user";
 
 const useSocket = (url: string) => {
     const [socket, setSocket] = useState(new WebSocket(url));
@@ -14,26 +16,37 @@ const useSocket = (url: string) => {
         return state.message.value.currentRoom;
     });
     const userIndex = useSelector((state: any) => {
-        return state.user.value.userInfo._id;
+        return state.user.value.userInfo;
     });
     const currentRoomRef = useRef<string>(currentRoom);
     const userIndexRef = useRef<string>(userIndex);
     const dispatch = useDispatch();
 
+    const getDetails = async () => {
+        const user = await details().then((res) => {
+            return res.data.user;
+        });
+        dispatch(setUserInfo({ userInfo: user }));
+        return user;
+    };
+
     useEffect(() => {
         currentRoomRef.current = currentRoom;
-    }, [currentRoom]);
+        userIndexRef.current = userIndex;
+    }, [currentRoom, userIndex]);
 
     useEffect(() => {
         const handleOpen = (event: any) => {
             console.log("WebSocket connected open");
-            socket.send(
-                JSON.stringify({
-                    type: "join",
-                    userId: "644a26c2650053651d9fdcf4",
-                    info: false,
-                })
-            );
+            getDetails().then((res) => {
+                socket.send(
+                    JSON.stringify({
+                        type: "join",
+                        userId: res._id,
+                        info: false,
+                    })
+                );
+            });
         };
 
         const handleMessage = (event: any) => {

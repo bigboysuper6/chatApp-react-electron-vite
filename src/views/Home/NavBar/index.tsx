@@ -13,7 +13,7 @@ import useOpen from "@/utils/hook/useOpen";
 import { EnvelopeTitle } from "@/components/Envelope";
 import SupportCard from "../SupportList/components/SupportCard";
 import { details } from "@/api/user";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUserInfo } from "@/app/Slices/user";
 const SvgList = [
     <ChatsSvg />,
@@ -83,21 +83,9 @@ interface user {
 
 const NavBar = ({ active, handleActive }: NavBarProps) => {
     const [modal, toggle] = useOpen(false);
-    const [user, setUser] = useState<user>({});
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        getDetails();
-    }, []);
-
-    const getDetails = async () => {
-        const user = await details().then((res) => {
-            return res.data.user;
-        });
-        setUser(user);
-        dispatch(setUserInfo({ userInfo: user }));
-    };
-
+    const user = useSelector((state: any) => {
+        return state.user.value.userInfo;
+    });
     return (
         <>
             <Nav
