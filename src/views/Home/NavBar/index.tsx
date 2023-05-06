@@ -57,7 +57,7 @@ const Body = ({ data }: BodyProps) => {
 
 const Footer = () => {
     const handleClick = () => {
-        localStorage.removeItem("Authorization");
+        sessionStorage.removeItem("Authorization");
         window.location.href = "/";
     };
     return (

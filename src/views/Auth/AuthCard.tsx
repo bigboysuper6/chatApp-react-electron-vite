@@ -33,7 +33,7 @@ const AuthCard = ({ model }: AuthCardProps) => {
             }).then((res) => {
                 const token = res.headers["authorization"];
                 if (token !== undefined) {
-                    localStorage.setItem("Authorization", token);
+                    sessionStorage.setItem("Authorization", token);
                     window.location.href = "/home";
                 }
             });
@@ -51,7 +51,7 @@ const AuthCard = ({ model }: AuthCardProps) => {
             }).then((res) => {
                 const token = res.headers["authorization"];
                 if (token !== undefined) {
-                    localStorage.setItem("Authorization", token);
+                    sessionStorage.setItem("Authorization", token);
                     window.location.href = "/home";
                 }
             });

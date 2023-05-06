@@ -39,7 +39,7 @@ class requestService {
     }
 
     getToken() {
-        return localStorage.getItem("Authorization");
+        return sessionStorage.getItem("Authorization");
     }
 }
 
