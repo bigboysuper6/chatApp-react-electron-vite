@@ -4,8 +4,9 @@ import { ReactComponent as AddSvg } from "@assets/add.svg";
 import { ReactComponent as AddFriendSvg } from "@assets/addFriend.svg";
 import { Row, Col, Form, FormGroup, Input, Label } from "reactstrap";
 import { useForm, Controller, Control } from "react-hook-form";
-
+import { TabListContext } from "@/views/Home/CreateGroupChat";
 import Avatar from "./Avatar";
+import { useContext } from "react";
 type EnvelopeProps = {
     isAddFirend?: boolean;
     isHomePage?: boolean;
@@ -52,6 +53,8 @@ type EnvelopeBodyProps = {
         {
             phoneNumber: string;
             verify: string;
+            groupName: string;
+            purpose: string;
         },
         any
     >;
@@ -67,18 +70,26 @@ export const EnvelopeBody = ({ isAddFirend, control }: EnvelopeBodyProps) => {
                                 <Label for="exampleEmail">
                                     {isAddFirend
                                         ? "请输入账号(手机号)"
-                                        : "Enter your group name"}
+                                        : "请输入群聊的名称"}
                                 </Label>
                                 <Controller
                                     render={({ field }) => (
                                         <Input
-                                            id="phoneNumber"
+                                            id={
+                                                isAddFirend
+                                                    ? "phoneNumber"
+                                                    : "groupName"
+                                            }
                                             className="border-0"
                                             {...field}
                                         />
                                     )}
                                     control={control}
-                                    name="phoneNumber"
+                                    name={
+                                        isAddFirend
+                                            ? "phoneNumber"
+                                            : "groupName"
+                                    }
                                 />
                             </FormGroup>
                         </Col>
@@ -87,19 +98,23 @@ export const EnvelopeBody = ({ isAddFirend, control }: EnvelopeBodyProps) => {
                                 <Label for="exampleText">
                                     {isAddFirend
                                         ? "请输入验证信息"
-                                        : "What's your purpose?"}
+                                        : "创建群聊的目的?"}
                                 </Label>
                                 <Controller
                                     render={({ field }) => (
                                         <Input
-                                            id="verify"
+                                            id={
+                                                isAddFirend
+                                                    ? "verify"
+                                                    : "purpose"
+                                            }
                                             type="textarea"
                                             className="border-0"
                                             {...field}
                                         />
                                     )}
                                     control={control}
-                                    name="verify"
+                                    name={isAddFirend ? "verify" : "purpose"}
                                 />
                             </FormGroup>
                         </Col>
@@ -111,28 +126,12 @@ export const EnvelopeBody = ({ isAddFirend, control }: EnvelopeBodyProps) => {
 };
 
 const Envelope = () => {
-    const {
-        handleSubmit,
-        control,
-        formState: { errors },
-        reset,
-    } = useForm({
-        defaultValues: { phoneNumber: "", verify: "" },
-    });
-
-    const onSubmit = (data: EnvelopeData) => {
-        console.log(data);
-    };
+    const { control } = useContext(TabListContext);
 
     return (
         <>
-            <Form
-                className="envelope mt-3 hidden-overflow"
-                onSubmit={handleSubmit(onSubmit)}
-            >
-                <EnvelopeTitle />
-                <EnvelopeBody control={control} />
-            </Form>
+            <EnvelopeTitle />
+            <EnvelopeBody control={control} />
         </>
     );
 };

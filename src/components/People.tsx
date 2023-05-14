@@ -3,11 +3,16 @@ import { ReactComponent as ThreeDotsVerticalSvg } from "@assets/threeDotsVertica
 import Avatar from "./Avatar";
 import AvatarGroup from "./AvatarGroup";
 import ToolTip from "./ToolTip";
+import { useContext } from "react";
+import { Controller } from "react-hook-form";
+import { TabListContext } from "@/views/Home/CreateGroupChat";
 type PeopleProps = {
     isOwner?: Boolean;
     isPeopleGroup?: Boolean;
     isSelectInput?: Boolean;
     isFiles?: Boolean;
+    name?: string;
+    groupIndex?: string;
 };
 
 const People = ({
@@ -15,7 +20,11 @@ const People = ({
     isPeopleGroup,
     isSelectInput,
     isFiles,
+    name,
+    groupIndex,
 }: PeopleProps) => {
+    const { control } = useContext(TabListContext);
+
     return (
         <>
             <div
@@ -41,7 +50,7 @@ const People = ({
                             <Col className="col-auto">
                                 <Avatar />
                             </Col>
-                            <Col>Jaron</Col>
+                            <Col>{name}</Col>
                         </>
                     )}
 
@@ -51,9 +60,17 @@ const People = ({
                     <Col className="col-auto text-color">
                         {isSelectInput === true ? (
                             <FormGroup check>
-                                <Input
-                                    type="checkbox"
-                                    className="people-group-select-input"
+                                <Controller
+                                    defaultValue={false}
+                                    name={`friend-selected-${groupIndex}`}
+                                    control={control}
+                                    render={({ field }) => (
+                                        <Input
+                                            type="checkbox"
+                                            className="people-group-select-input"
+                                            {...field}
+                                        />
+                                    )}
                                 />
                             </FormGroup>
                         ) : (

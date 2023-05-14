@@ -1,3 +1,3 @@
 interface data {
-    [propName: string]: string | boolean;
+    [propName: string]: any;
 }

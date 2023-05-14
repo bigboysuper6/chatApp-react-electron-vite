@@ -1,13 +1,14 @@
 import request from "@/utils/request";
-import { convertToFormData } from "@/utils/utils";
+import { convertToFormData, convertToUrlParams } from "@/utils/utils";
 
 const addFriend = (data: data) => {
     const formData = convertToFormData(data);
     return request.service.post("/friend/add-friend", formData);
 };
 
-const friend = () => {
-    return request.service.get("friend");
+const friend = (data: data) => {
+    const params = convertToUrlParams(data);
+    return request.service.get("friend", { params });
 };
 
 const deletleFriend = (id: string) => {

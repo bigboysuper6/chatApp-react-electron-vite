@@ -7,7 +7,6 @@ import { EnvelopeTitle, EnvelopeBody } from "@/components/Envelope";
 import { useEffect, useState } from "react";
 import { ReactComponent as ArrowRightSvg } from "@assets/arrowRight.svg";
 import useOpen from "@/utils/hook/useOpen";
-import { friend } from "@/api/friend";
 import { useForm, Controller, Control } from "react-hook-form";
 import { Form } from "reactstrap";
 import { getUser } from "@/api/user";
@@ -36,10 +35,6 @@ type IFriendListProps = {
 };
 
 const FriendList = ({ socket, rooms }: IFriendListProps) => {
-    const [modal, toggle] = useOpen(false);
-    const [friends, setFriends] = useState([]);
-    const userId = useSelector((state: any) => state.user.value.userInfo._id);
-
     const {
         handleSubmit,
         control,
@@ -48,10 +43,9 @@ const FriendList = ({ socket, rooms }: IFriendListProps) => {
     } = useForm({
         defaultValues: { phoneNumber: "", verify: "" },
     });
-
-    useEffect(() => {
-        getFriends();
-    }, []);
+    const [modal, toggle] = useOpen(false);
+    const userId = useSelector((state: any) => state.user.value.userInfo._id);
+    const friends = useSelector((state: any) => state.user.value.friends);
 
     const onSubmit = async (data: EnvelopeData) => {
         const { phoneNumber, verify } = data;
@@ -78,13 +72,6 @@ const FriendList = ({ socket, rooms }: IFriendListProps) => {
         }
     };
 
-    const getFriends = async () => {
-        const friends = await friend().then((res) => {
-            return res.data.friends;
-        });
-        setFriends(friends);
-    };
-
     return (
         <>
             <div className="chat-list hidden-overflow px-4 bg-light ">
@@ -105,13 +92,14 @@ const FriendList = ({ socket, rooms }: IFriendListProps) => {
                         Footer={<Footer onClick={handleSubmit(onSubmit)} />}
                     />
                 </Form>
-                <PeopleGroup />
-                <PeopleGroup />
-                <PeopleGroup />
-                <PeopleGroup />
-                <PeopleGroup />
-                <PeopleGroup />
-                <PeopleGroup />
+                {friends.map((item: any) => {
+                    return (
+                        <PeopleGroup
+                            groupArr={item.groupArr}
+                            groupName={item.letter}
+                        />
+                    );
+                })}
             </div>
         </>
     );

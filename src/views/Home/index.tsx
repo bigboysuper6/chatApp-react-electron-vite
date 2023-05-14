@@ -10,20 +10,25 @@ import CreateGroupChat from "./CreateGroupChat";
 import useActive from "@utils/hook/useActive";
 import { useState, createContext, useEffect } from "react";
 import useSocket from "@/utils/hook/useSocket";
+import { friend } from "@/api/friend";
+import { setFriends } from "@/app/Slices/user";
+import { useDispatch } from "react-redux";
 export const ChatBoxContext = createContext<any>({});
 export const ChatInfoContext = createContext<any>({});
 export const AsideContext = createContext<any>({});
+
 const Home = () => {
     //control chatinfo display or not
     const [isDisplay, setIsDisplay] = useState(true);
     const [visible, setVisible] = useState(false);
     const [active, handleActive] = useActive(0);
     const [socket] = useSocket(import.meta.env.VITE_APP_SOCKET_URL);
+    const dispatch = useDispatch();
 
     const [AsideComponents] = useState([
         <ChatList />,
         <FriendList socket={socket} />,
-        <CreateGroupChat />,
+        <CreateGroupChat socket={socket} />,
         <NotificationList />,
         <SupportList />,
         <SettingList />,
@@ -32,6 +37,17 @@ const Home = () => {
     // useEffect(() => {
     //     if (!visible) setIsDisplay(false);
     // }, [visible]);
+
+    useEffect(() => {
+        getFriends();
+    });
+
+    const getFriends = async () => {
+        const friends = await friend({ group: true }).then((res) => {
+            return res.data.friends;
+        });
+        dispatch(setFriends(friends));
+    };
 
     //setIsDisplay
     const handleSetIsDisplay = () => {

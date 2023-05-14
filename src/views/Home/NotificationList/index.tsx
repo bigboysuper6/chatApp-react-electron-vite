@@ -72,6 +72,8 @@ const NotificationList = () => {
                                         ? item.recevierId
                                         : item.userId
                                 }
+                                isGroup={verify.group}
+                                groupName={item.groupName}
                             />
                         </>
                     );

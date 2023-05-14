@@ -1,4 +1,5 @@
 interface verifyInterface {
+    groupName: string | undefined;
     recevierId: string;
     type: string;
     content: string;

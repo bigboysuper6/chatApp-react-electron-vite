@@ -8,9 +8,10 @@ import { setChatRooms } from "@/app/Slices/message";
 import { addFriend } from "@/api/friend";
 import { useSelector, useDispatch } from "react-redux";
 import { AsideContext } from "@/views/Home";
+import { addGroup } from "@/api/group";
 
 type ChatCardProps = {
-    isGroup?: Boolean;
+    isGroup?: boolean;
     isNotification?: Boolean;
     text: string;
     name: string;
@@ -20,6 +21,7 @@ type ChatCardProps = {
     onClick?: () => void;
     recevierId?: string;
     friendId?: string;
+    groupName?: string;
 };
 
 const ChatCard = ({
@@ -33,6 +35,7 @@ const ChatCard = ({
     recevierId,
     onClick,
     friendId,
+    groupName,
 }: ChatCardProps) => {
     const [result, setResult] = useState(theResult);
     const dispatch = useDispatch();
@@ -48,10 +51,13 @@ const ChatCard = ({
             result: true,
             roomId,
             recevierId,
+            group: isGroup ?? false,
         }).then((res) => res.data.verify);
 
         if (!verify.group) {
             await addFriend({ friendId, roomId });
+        } else {
+            await addGroup({ roomId, createAt: Date.now(), name: groupName });
         }
 
         if (socket.readyState === WebSocket.OPEN) {
@@ -66,6 +72,7 @@ const ChatCard = ({
             result: false,
             roomId,
             recevierId,
+            group: isGroup ?? false,
         }).then((res) => res.data.verify);
 
         if (socket.readyState === WebSocket.OPEN) {
@@ -101,7 +108,7 @@ const ChatCard = ({
                         </Col>
                     </Row>
                 </CardBody>
-                {isGroup === true && (
+                {isGroup === true && !isNotification && (
                     <CardFooter className="px-4">
                         <ChatInfoRow />
                     </CardFooter>

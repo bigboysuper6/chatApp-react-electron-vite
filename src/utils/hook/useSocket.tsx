@@ -62,6 +62,7 @@ const useSocket = (url: string) => {
                 recevierId,
                 userId,
                 result,
+                groupName,
             } = message;
 
             if (type === "verify") {
@@ -80,6 +81,7 @@ const useSocket = (url: string) => {
                                 content,
                                 createdAt: Date.now(),
                                 roomId,
+                                groupName,
                             })
                         );
                     }
