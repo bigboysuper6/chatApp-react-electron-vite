@@ -47,6 +47,7 @@ const NotificationList = () => {
                     (other, otherIndex) =>
                         other.roomId === item.roomId &&
                         other.createAt === item.createAt &&
+                        other.result === item.result &&
                         otherIndex > index
                 );
                 // 如果找到重复元素，则返回false，表示当前元素不会被保留
