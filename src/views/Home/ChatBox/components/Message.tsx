@@ -29,14 +29,18 @@ const Message = ({
     });
 
     const isUser = senderId === userId;
-    const avatar = [groupInfo?.owner, ...groupInfo?.members].find(
-        (item: any) => {
-            console.log(item._id, senderId, "id");
-            return item?._id === senderId;
+    const avatar = (() => {
+        if (groupInfo?.owner && groupInfo?.members) {
+            return [groupInfo?.owner, ...groupInfo?.members].find(
+                (item: any) => {
+                    return item?._id === senderId;
+                }
+            )?.avatar;
+        } else {
+            return undefined;
         }
-    )?.avatar;
+    })();
     console.log(avatar, "avatar");
-    //get width and height of image
     useEffect(() => {
         const image = new Image();
         image.src = message;
@@ -65,6 +69,7 @@ const Message = ({
 
     const MessageContent = () => {
         if (type === "img") {
+            console.log("yes");
             return (
                 <img
                     src={message}
@@ -133,7 +138,7 @@ const Message = ({
                         isUser == true ? "me-3" : "ms-3"
                     } `}
                 >
-                    {MessageContent()}
+                    <MessageContent />
                     <div className="message-time-text">{createdAt}</div>
                 </div>
             </div>

@@ -63,14 +63,16 @@ const useSocket = (url: string) => {
                 userId,
                 result,
                 groupName,
+                verify,
+                rooms,
             } = message;
 
             if (type === "verify") {
                 console.log(message);
+
                 if (recevierId !== userIndexRef.current)
-                    dispatch(setVerify(message));
-                if (result === true)
-                    dispatch(setChatRooms({ rooms: [message] }));
+                    dispatch(setVerify(verify));
+                if (result === true) dispatch(setChatRooms({ rooms }));
             } else if (type === "join") {
                 if (roomId !== undefined) {
                     if (socket.readyState === WebSocket.OPEN) {

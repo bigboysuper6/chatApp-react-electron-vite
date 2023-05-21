@@ -23,7 +23,7 @@ const ChatBody = () => {
                     const createdAt = moment(item.createdAt).format(
                         "YYYY-MM-DD hh:mm A"
                     );
-                    console.log(item.createAt);
+                    console.log(item.type);
                     return (
                         <Message
                             message={item.content}

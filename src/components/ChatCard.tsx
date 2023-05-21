@@ -9,7 +9,7 @@ import { addFriend } from "@/api/friend";
 import { useSelector, useDispatch } from "react-redux";
 import { AsideContext } from "@/views/Home";
 import { addGroup } from "@/api/group";
-
+import { getRooms } from "@/api/message";
 type ChatCardProps = {
     isGroup?: boolean;
     isNotification?: Boolean;
@@ -71,11 +71,14 @@ const ChatCard = ({
                 purpose: verify.content,
             });
         }
-
+        const rooms = await getRooms({ userId }).then((res) => {
+            const verify = res.data.roomsAgree;
+            return verify;
+        });
         if (socket.readyState === WebSocket.OPEN) {
-            socket.send(JSON.stringify({ ...verify, type: "verify" }));
+            socket.send(JSON.stringify({ verify, type: "verify", rooms }));
         }
-        dispatch(setChatRooms({ rooms: [verify] }));
+        dispatch(setChatRooms({ rooms }));
     }, []);
 
     const onClickRefuse = useCallback(async () => {
@@ -89,7 +92,7 @@ const ChatCard = ({
         }).then((res) => res.data.verify);
 
         if (socket.readyState === WebSocket.OPEN) {
-            socket.send(JSON.stringify({ ...verify, type: "verify" }));
+            socket.send(JSON.stringify({ verify, type: "verify" }));
         }
     }, []);
 

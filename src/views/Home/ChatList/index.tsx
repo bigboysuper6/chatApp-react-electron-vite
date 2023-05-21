@@ -45,6 +45,8 @@ const ChatList = () => {
         dispatch(setGroupInfo({ groupInfo }));
     };
 
+    console.log(rooms, "rooms");
+
     return (
         <>
             <div className="chat-list hidden-overflow px-4 bg-light ">
@@ -57,15 +59,22 @@ const ChatList = () => {
                                 onClick={() => handleClick(item._id)}
                                 text={item.newestMessage}
                                 name={
-                                    item.memberDetails?.name ?? item.owner?.name
+                                    item.members?.length > 1
+                                        ? item.owner?.name
+                                        : userId === item.owner?.id
+                                        ? item.memverDetails?.name
+                                        : item.owner?.name
                                 }
                                 roomId={item.roomId}
                                 time={moment(item.createdAt).format(
                                     "YYYY-MM-DD hh:mm A"
                                 )}
                                 avatar={
-                                    item.memberDetails?.avatar ??
-                                    item.owner?.avatar
+                                    item.members?.length > 1
+                                        ? item.owner?.avatar
+                                        : userId === item.owner?.id
+                                        ? item.memverDetails?.avatar
+                                        : item.owner?.avatar
                                 }
                                 isGroup={item.members?.length > 1}
                                 groupName={item.groupDetails?.name}
