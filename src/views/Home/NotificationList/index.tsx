@@ -33,17 +33,25 @@ const NotificationList = () => {
     const allVerfiy = (() => {
         const senderVerify = verify.map((item: any) => {
             if (item.userId === userId && typeof item.result == "boolean") {
-                item.result = null;
-                return item;
+                const copyItem = { ...item };
+                copyItem.result = null;
+
+                return copyItem;
             }
         });
-        senderVerify.sort((a: any, b: any) => {
-            return a.createAt - b.createAt;
-        });
-
-        return [...senderVerify, ...verify].filter(
-            (item: any) => item !== undefined
-        );
+        return [...senderVerify, ...verify]
+            .filter((item: any) => item !== undefined)
+            .filter((item, index, self) => {
+                // 查找当前元素之后是否存在与当前元素roomId和createAt相同的元素
+                const duplicateIndex = self.findIndex(
+                    (other, otherIndex) =>
+                        other.roomId === item.roomId &&
+                        other.createAt === item.createAt &&
+                        otherIndex > index
+                );
+                // 如果找到重复元素，则返回false，表示当前元素不会被保留
+                return duplicateIndex === -1;
+            });
     })();
     console.log(allVerfiy, "allVerfiy");
     return (

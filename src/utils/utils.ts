@@ -74,7 +74,27 @@ const deduplicatedArray = (array: any[], updateData: any[]) => {
     const result = Array.from(new Set(newArray));
     return result;
 };
-
+const deteleAttributes = (object: data, name: any[]) => {
+    const newObject: data = {};
+    for (let value of Object.keys(object)) {
+        try {
+            if (typeof object !== "object") {
+                throw new Error(
+                    `typeof the value input  is not a object,its type is ${typeof object}`
+                );
+            }
+            if (Object.hasOwnProperty.apply(object, [String(value)]) === false)
+                throw new Error(
+                    `A parameter that needs to be deleted "${value}" is undefined`
+                );
+        } catch (error: any) {
+            console.log(`there is a error:${error.message}`);
+        } finally {
+            if (name.indexOf(value) === -1) newObject[value] = object[value];
+        }
+    }
+    return newObject;
+};
 export {
     convertToFormData,
     convertToUrlParams,
@@ -82,4 +102,5 @@ export {
     throttle,
     extractAttributes,
     deduplicatedArray,
+    deteleAttributes,
 };
