@@ -67,7 +67,7 @@ const CreateGroupChat = ({ socket }: CreateGroupChatProps) => {
                     handleActive={handleActive}
                 />
                 <TabListContext.Provider value={{ control }}>
-                    <Form onSubmit={handleSubmit(onSubmit)}>
+                    <Form onSubmit={handleSubmit(onSubmit)} className="mt-3">
                         <div>
                             {TabList.map((item, index) => {
                                 return (

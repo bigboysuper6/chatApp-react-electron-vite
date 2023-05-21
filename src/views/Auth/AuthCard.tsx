@@ -18,7 +18,8 @@ const AuthCard = ({ model }: AuthCardProps) => {
         formState: { errors },
     } = useForm({
         defaultValues: {
-            "auth-username": "",
+            "auth-username": "Jaron",
+            "auth-gender": "男",
             "auth-password": "666666",
             "auth-tel": "13144912396",
             "auth-email": "1773257425@qq.com",
@@ -48,6 +49,7 @@ const AuthCard = ({ model }: AuthCardProps) => {
                 phoneNumber: data["auth-tel"],
                 name: data["auth-username"],
                 "e-mail": data["auth-email"],
+                gender: data["auth-gender"],
             }).then((res) => {
                 const token = res.headers["authorization"];
                 if (token !== undefined) {
@@ -89,6 +91,21 @@ const AuthCard = ({ model }: AuthCardProps) => {
                                         )}
                                         control={control}
                                         name="auth-username"
+                                    />
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label for="auth-gender">输入性别</Label>
+                                    <Controller
+                                        render={({ field }) => (
+                                            <Input
+                                                id="auth-gender"
+                                                type="text"
+                                                className="border-0"
+                                                {...field}
+                                            />
+                                        )}
+                                        control={control}
+                                        name="auth-gender"
                                     />
                                 </FormGroup>
                                 <FormGroup>

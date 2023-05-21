@@ -1,14 +1,18 @@
-const ChatInfoTitle = () => {
+type IChatInfoTitleProps = {
+    groupName: string;
+    groupPurpose: string;
+};
+
+const ChatInfoTitle = ({ groupName, groupPurpose }: IChatInfoTitleProps) => {
     return (
         <>
             <div className="chat-info-title text-center ">
                 <div>
-                    <h5 className="d-inline-block">Bootstrap Community</h5>
+                    <h5 className="d-inline-block">{groupName}</h5>
                 </div>
                 <div>
                     <div className="d-inline-block text-color">
-                        booststrap is an open source,booststrap is an open
-                        sourcebooststrap is an open source
+                        {groupPurpose}
                     </div>
                 </div>
             </div>

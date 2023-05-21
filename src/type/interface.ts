@@ -1,4 +1,5 @@
 interface verifyInterface {
+    senderAvatar: string | undefined;
     group: boolean | undefined;
     groupName: string | undefined;
     recevierId: string;

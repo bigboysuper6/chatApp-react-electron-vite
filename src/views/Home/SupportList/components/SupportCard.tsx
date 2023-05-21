@@ -11,6 +11,7 @@ import {
 } from "reactstrap";
 import { ReactComponent as ArrowRightSvg } from "@assets/arrowRight.svg";
 import { useState } from "react";
+import { Controller } from "react-hook-form";
 
 type SupportCardProps = {
     isSetting?: Boolean;
@@ -19,7 +20,10 @@ type SupportCardProps = {
     data: {
         title?: string;
         value?: string;
+        type?: string;
     };
+    control?: any;
+    handleSubmit: any;
 };
 
 const SupportCard = ({
@@ -27,6 +31,8 @@ const SupportCard = ({
     isHomePage,
     isLastCard,
     data,
+    control,
+    handleSubmit,
 }: SupportCardProps) => {
     const [rotation, setRotation] = useState(0);
 
@@ -87,26 +93,54 @@ const SupportCard = ({
                 </CardBody>
                 {isSetting && rotation === 90 && (
                     <CardFooter className="pt-3 support-card-footer border-0 border-bottom">
-                        <Form className="support-card-footer-form">
+                        <Form
+                            className="support-card-footer-form"
+                            onSubmit={handleSubmit}
+                        >
                             <FormGroup className="d-flex justify-content-center flex-wrap">
-                                <Input
-                                    name="email"
-                                    placeholder="input"
-                                    type="email"
-                                    className="mb-3"
-                                />
-                                <Input
-                                    name="email"
-                                    placeholder="input"
-                                    type="email"
-                                    className="mb-3"
-                                />
-                                <Input
-                                    name="email"
-                                    placeholder="input"
-                                    type="email"
-                                    className="mb-3"
-                                />
+                                {data.type === "password" && (
+                                    <Controller
+                                        name="currentPassword"
+                                        control={control}
+                                        render={({ field }) => (
+                                            <Input
+                                                placeholder="currentPassword"
+                                                className="mb-3"
+                                                {...field}
+                                            />
+                                        )}
+                                    />
+                                )}
+                                {data.type == "avatar" ? (
+                                    <Controller
+                                        name={data.type as string}
+                                        control={control}
+                                        render={({ field }) => (
+                                            <Input
+                                                placeholder={data.type}
+                                                className="mb-3"
+                                                type="file"
+                                                onChange={(event) =>
+                                                    field.onChange(
+                                                        event.target.files
+                                                    )
+                                                }
+                                            />
+                                        )}
+                                    />
+                                ) : (
+                                    <Controller
+                                        name={data.type as string}
+                                        control={control}
+                                        render={({ field }) => (
+                                            <Input
+                                                placeholder={data.type}
+                                                className="mb-3"
+                                                {...field}
+                                            />
+                                        )}
+                                    />
+                                )}
                                 <Button
                                     type="submit"
                                     className="border-0 w-100"

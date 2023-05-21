@@ -4,6 +4,9 @@
 .chat-info-row {
     .avatar {
         margin-left: -0.6rem;
+        svg {
+            @include components.avatar(16px);
+        }
         @include components.avatar(26px);
     }
     .group-member-count {

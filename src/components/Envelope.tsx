@@ -7,6 +7,7 @@ import { useForm, Controller, Control } from "react-hook-form";
 import { TabListContext } from "@/views/Home/CreateGroupChat";
 import Avatar from "./Avatar";
 import { useContext } from "react";
+import { useSelector } from "react-redux";
 type EnvelopeProps = {
     isAddFirend?: boolean;
     isHomePage?: boolean;
@@ -18,6 +19,9 @@ export const EnvelopeTitle = ({
     isHomePage,
     title,
 }: EnvelopeProps) => {
+    const user = useSelector((state: any) => {
+        return state.user.value.userInfo;
+    });
     return (
         <>
             <div className="envelope-title">
@@ -25,7 +29,7 @@ export const EnvelopeTitle = ({
                 <div className="d-flex justify-content-center">
                     <div className="position-relative envelop-svg rounded-circle d-inline-block">
                         {isHomePage ? (
-                            <Avatar />
+                            <Avatar avatar={user.avatar} />
                         ) : (
                             <div className="text-center envelop-img-svg">
                                 {isAddFirend ? <AddFriendSvg /> : <ImgSvg />}

@@ -13,6 +13,10 @@ type PeopleProps = {
     isFiles?: Boolean;
     name?: string;
     groupIndex?: string;
+    fileSize?: string;
+    avatar?: string;
+    avatars?: string[];
+    Svg?: React.ReactElement;
 };
 
 const People = ({
@@ -22,6 +26,10 @@ const People = ({
     isFiles,
     name,
     groupIndex,
+    fileSize,
+    avatar,
+    avatars,
+    Svg,
 }: PeopleProps) => {
     const { control } = useContext(TabListContext);
 
@@ -37,18 +45,16 @@ const People = ({
                 <Row className={`align-items-center ${isFiles ? "ms-0" : ""} `}>
                     {isFiles ? (
                         <>
-                            <AvatarGroup />
+                            <AvatarGroup avatars={avatars ?? []} Svg={Svg} />
                             <Col className="px-0">
-                                <h4 className="my-0">
-                                    askhjdkjaslhbdjklhas-hdklasd
-                                </h4>
-                                <p className="text-color my-0">54.2kb mp4</p>
+                                <h4 className="my-0">{name}</h4>
+                                <p className="text-color my-0">{fileSize}</p>
                             </Col>
                         </>
                     ) : (
                         <>
                             <Col className="col-auto">
-                                <Avatar />
+                                <Avatar avatar={avatar as string} />
                             </Col>
                             <Col>{name}</Col>
                         </>

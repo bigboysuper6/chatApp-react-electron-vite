@@ -23,6 +23,7 @@ const PeopleGroup = ({
                             name={item.name}
                             isPeopleGroup={true}
                             isSelectInput={isSelectInput}
+                            avatar={item.avatar}
                         />
                     );
                 })}

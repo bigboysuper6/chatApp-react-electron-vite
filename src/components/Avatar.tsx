@@ -1,10 +1,9 @@
-import avatar from "@assets/avatar.jpeg";
-
 type AvatarProps = {
     onClick?: () => void;
+    avatar: string;
 };
 
-const Avatar = ({ onClick }: AvatarProps) => {
+const Avatar = ({ onClick, avatar }: AvatarProps) => {
     return (
         <>
             <div onClick={onClick}>

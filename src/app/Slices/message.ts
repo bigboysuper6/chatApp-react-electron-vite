@@ -8,6 +8,7 @@ export const messageSlice = createSlice({
             chatRooms: [] as any,
             currentRoom: "" as string,
             messages: [] as any,
+            groupInfo: {} as any,
         },
     },
     reducers: {
@@ -63,6 +64,11 @@ export const messageSlice = createSlice({
         resetMessages: (state) => {
             state.value.messages = [];
         },
+
+        setGroupInfo: (state, action) => {
+            const { groupInfo } = action.payload;
+            state.value.groupInfo = groupInfo;
+        },
     },
 });
 
@@ -75,6 +81,7 @@ export const {
     setNewestMessage,
     setMessages,
     resetChatRooms,
+    setGroupInfo,
 } = messageSlice.actions;
 
 export default messageSlice.reducer;

@@ -30,12 +30,25 @@ const NotificationList = () => {
         });
     };
 
+    const allVerfiy = (() => {
+        const senderVerify = verify.map((item: any) => {
+            if (item.userId === userId && typeof item.result == "boolean") {
+                item.result = null;
+                return item;
+            }
+        });
+        senderVerify.sort((a: any, b: any) => {
+            return a.createAt - b.createAt;
+        });
+        return [...senderVerify, ...verify];
+    })();
+
     return (
         <>
             <div className="chat-list hidden-overflow px-4 bg-light">
                 <h2 className="fw-bold">通知</h2>
                 <Search />
-                {verify.map((item: verifyInterface, index: number) => {
+                {allVerfiy.map((item: verifyInterface, index: number) => {
                     let result;
                     if (item.userId === userId && item.result) {
                         result = "recevierAgree";
@@ -46,6 +59,7 @@ const NotificationList = () => {
                     } else {
                         result = item.result;
                     }
+
                     return (
                         <>
                             <ChatCard
@@ -74,6 +88,7 @@ const NotificationList = () => {
                                 }
                                 isGroup={item.group}
                                 groupName={item.groupName}
+                                avatar={item.senderAvatar}
                             />
                         </>
                     );

@@ -19,7 +19,7 @@ export const AsideContext = createContext<any>({});
 
 const Home = () => {
     //control chatinfo display or not
-    const [isDisplay, setIsDisplay] = useState(true);
+    const [isDisplay, setIsDisplay] = useState(false);
     const [visible, setVisible] = useState(false);
     const [active, handleActive] = useActive(0);
     const [socket] = useSocket(import.meta.env.VITE_APP_SOCKET_URL);
@@ -30,7 +30,7 @@ const Home = () => {
         <FriendList socket={socket} />,
         <CreateGroupChat socket={socket} />,
         <NotificationList />,
-        <SupportList />,
+        // <SupportList />,
         <SettingList />,
     ]);
 
@@ -86,7 +86,7 @@ const Home = () => {
                     </div>
                 </ChatBoxContext.Provider>
                 <ChatInfoContext.Provider value={{ setIsDisplay }}>
-                    <ChatInfo isDisplay={isDisplay} />
+                    <ChatInfo isDisplay={isDisplay && visible} />
                 </ChatInfoContext.Provider>
             </div>
         </>

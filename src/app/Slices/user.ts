@@ -4,7 +4,7 @@ export const userSlice = createSlice({
     name: "user",
     initialState: {
         value: {
-            userInfo: {},
+            userInfo: {} as any,
             friends: [] as any,
         },
     },
@@ -21,9 +21,38 @@ export const userSlice = createSlice({
             const friend = action.payload;
             state.value.friends.push(friend);
         },
+        setArea: (state, action) => {
+            const { area } = action.payload;
+            state.value.userInfo.area = area;
+        },
+        setPhoneNumber: (state, action) => {
+            const { phoneNumber } = action.payload;
+            state.value.userInfo.phoneNumber = phoneNumber;
+        },
+        setEmail: (state, action) => {
+            const { email } = action.payload;
+            state.value.userInfo["e-mail"] = email;
+        },
+        setName: (state, action) => {
+            const { name } = action.payload;
+            state.value.userInfo.name = name;
+        },
+        setAvatar: (state, action) => {
+            const { avatar } = action.payload;
+            state.value.userInfo.avatar = avatar;
+        },
     },
 });
 
-export const { setUserInfo, setFriends, addFriends } = userSlice.actions;
+export const {
+    setUserInfo,
+    setFriends,
+    addFriends,
+    setArea,
+    setPhoneNumber,
+    setEmail,
+    setName,
+    setAvatar,
+} = userSlice.actions;
 
 export default userSlice.reducer;

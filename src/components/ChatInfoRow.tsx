@@ -2,12 +2,36 @@ import { ReactComponent as ThreeDots } from "@assets/threeDots.svg";
 import AvatarGroup from "./AvatarGroup";
 import { ChatBoxContext } from "@/views/Home";
 import { Col, Row } from "reactstrap";
-import { useContext } from "react";
+import { useContext, useMemo } from "react";
+import { useSelector } from "react-redux";
 type ChatInfoRowProps = {
-    isChatHeader?: Boolean;
+    isChatHeader?: boolean;
+    groupName?: string;
+    groupMembersNumber?: string;
+    membersAvatars?: string[];
+    isGroup?: boolean;
 };
-const ChatInfoRow = ({ isChatHeader }: ChatInfoRowProps) => {
+const ChatInfoRow = ({
+    isChatHeader,
+    groupName,
+    groupMembersNumber,
+    membersAvatars,
+    isGroup,
+}: ChatInfoRowProps) => {
     const { handleSetIsDisplay } = useContext(ChatBoxContext);
+
+    const groupInfo = useSelector((state: any) => {
+        return state.message.value.groupInfo;
+    });
+
+    const avatars = useMemo(() => {
+        const avatars = [];
+        avatars.push(groupInfo?.owner?.avatar);
+        groupInfo?.members?.slice(0, 2).forEach((item: any) => {
+            avatars.push(item?.avatar);
+        });
+        return avatars;
+    }, [groupInfo]);
 
     return (
         <>
@@ -15,22 +39,29 @@ const ChatInfoRow = ({ isChatHeader }: ChatInfoRowProps) => {
                 <Col className="group-name ">
                     {isChatHeader === true ? (
                         <>
-                            <h5 className="h5">
-                                2023春招内推3群2023春招内推3群
-                            </h5>
-                            <div className="text-color">35 members</div>
+                            <h5 className="h5">{groupName}</h5>
+                            <div className="text-color">
+                                {groupMembersNumber} 成员
+                            </div>
                         </>
                     ) : (
-                        <>2023春招内推3群2023春招内推3群</>
+                        <>{groupName}</>
                     )}
                 </Col>
-                <Col className="col-auto">
-                    <ThreeDots
-                        className="text-color"
-                        onClick={handleSetIsDisplay}
-                    />
-                </Col>
-                <AvatarGroup />
+                {isChatHeader && (
+                    <Col className="col-auto">
+                        <ThreeDots
+                            className="text-color"
+                            onClick={handleSetIsDisplay}
+                        />
+                    </Col>
+                )}
+                <AvatarGroup
+                    avatars={membersAvatars ?? avatars}
+                    number={groupMembersNumber}
+                    isChatHeader={isChatHeader}
+                    isGroup={isGroup}
+                />
             </Row>
         </>
     );

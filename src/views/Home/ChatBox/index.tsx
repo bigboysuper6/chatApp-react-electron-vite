@@ -61,7 +61,7 @@ const ChatBox = () => {
                 }
             >
                 <ChatHeader />
-                <ChatBody userId={userId} />
+                <ChatBody />
                 <ChatFooterContext.Provider value={{ handleMessages }}>
                     <ChatFooter />
                 </ChatFooterContext.Provider>

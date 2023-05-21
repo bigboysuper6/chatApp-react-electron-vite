@@ -5,10 +5,13 @@ import {
     setChatRooms,
     setCurrentRoom,
     resetChatRooms,
+    setGroupInfo,
 } from "@/app/Slices/message";
 import { getRooms } from "@/api/message";
 import { useEffect, useContext } from "react";
 import { AsideContext } from "..";
+import { groupMembers } from "@/api/group";
+import moment from "moment";
 
 const ChatList = () => {
     const dispatch = useDispatch();
@@ -33,9 +36,13 @@ const ChatList = () => {
         dispatch(setChatRooms({ rooms }));
     };
 
-    const handleClick = (roomId: string) => {
+    const handleClick = async (roomId: string) => {
         setVisible(true);
         dispatch(setCurrentRoom({ roomId }));
+        const groupInfo = await groupMembers({ roomId }).then((res) => {
+            return res.data;
+        });
+        dispatch(setGroupInfo({ groupInfo }));
     };
 
     return (
@@ -47,11 +54,26 @@ const ChatList = () => {
                     return (
                         <>
                             <ChatCard
-                                onClick={() => handleClick(item.roomId)}
+                                onClick={() => handleClick(item._id)}
                                 text={item.newestMessage}
-                                name={"Jaron"}
+                                name={
+                                    item.memberDetails?.name ?? item.owner?.name
+                                }
                                 roomId={item.roomId}
-                                time={"12.00pm"}
+                                time={moment(item.createdAt).format(
+                                    "YYYY-MM-DD hh:mm A"
+                                )}
+                                avatar={
+                                    item.memberDetails?.avatar ??
+                                    item.owner.avatar
+                                }
+                                isGroup={item.members.length > 1}
+                                groupName={item.groupDetails?.name}
+                                membersAvatars={item.membersAvatars?.slice(
+                                    0,
+                                    3
+                                )}
+                                membersNumber={item.membersAvatars?.length + 1}
                             />
                         </>
                     );

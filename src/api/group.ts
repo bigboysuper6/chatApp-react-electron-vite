@@ -5,4 +5,9 @@ const addGroup = (data: data) => {
     const formData = convertToFormData(data);
     return request.service.post("/group/add-group", formData);
 };
-export { addGroup };
+const groupMembers = (data: data) => {
+    const params = convertToUrlParams(data);
+    return request.service.get("/group/group-info", { params });
+};
+
+export { addGroup, groupMembers };

@@ -22,6 +22,9 @@ type ChatCardProps = {
     recevierId?: string;
     friendId?: string;
     groupName?: string;
+    avatar?: string;
+    membersAvatars?: string[];
+    membersNumber?: string;
 };
 
 const ChatCard = ({
@@ -36,6 +39,9 @@ const ChatCard = ({
     onClick,
     friendId,
     groupName,
+    avatar,
+    membersAvatars,
+    membersNumber,
 }: ChatCardProps) => {
     const [result, setResult] = useState(theResult);
     const dispatch = useDispatch();
@@ -52,12 +58,18 @@ const ChatCard = ({
             roomId,
             recevierId,
             group: isGroup ?? false,
+            updatedAt: Date.now(),
         }).then((res) => res.data.verify);
 
         if (!verify.group) {
             await addFriend({ friendId, roomId });
         } else {
-            await addGroup({ roomId, createAt: Date.now(), name: groupName });
+            await addGroup({
+                roomId,
+                createAt: Date.now(),
+                name: groupName,
+                purpose: verify.content,
+            });
         }
 
         if (socket.readyState === WebSocket.OPEN) {
@@ -73,6 +85,7 @@ const ChatCard = ({
             roomId,
             recevierId,
             group: isGroup ?? false,
+            updatedAt: Date.now(),
         }).then((res) => res.data.verify);
 
         if (socket.readyState === WebSocket.OPEN) {
@@ -86,7 +99,7 @@ const ChatCard = ({
                 <CardBody className="px-4">
                     <Row className="gx-5">
                         <Col className="avatar-container col-auto pe-1 ">
-                            <Avatar />
+                            <Avatar avatar={avatar as string} />
                         </Col>
                         <Col className="w-75">
                             <div className="d-flex justify-content-between align-items-center mb-2">
@@ -101,7 +114,7 @@ const ChatCard = ({
                                     </Col>
                                 ) : (
                                     <div className=" rounded-circle message-count  fw-bold">
-                                        3
+                                        {""}
                                     </div>
                                 )}
                             </div>
@@ -110,7 +123,12 @@ const ChatCard = ({
                 </CardBody>
                 {isGroup === true && !isNotification && (
                     <CardFooter className="px-4">
-                        <ChatInfoRow />
+                        <ChatInfoRow
+                            groupName={groupName}
+                            membersAvatars={membersAvatars}
+                            groupMembersNumber={membersNumber}
+                            isGroup={true}
+                        />
                     </CardFooter>
                 )}
                 {isNotification === true && (

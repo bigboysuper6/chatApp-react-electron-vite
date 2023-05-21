@@ -1,17 +1,32 @@
 import SupportCard from "../../SupportList/components/SupportCard";
 
-const SettingCardGroup = () => {
+type ISettingCardGroupProps = {
+    control: any;
+    handleSubmit: any;
+    title: string;
+    data: object[];
+};
+
+const SettingCardGroup = ({
+    control,
+    handleSubmit,
+    title,
+    data,
+}: ISettingCardGroupProps) => {
     return (
         <>
-            <p className="text-color my-3">Account</p>
+            <p className="text-color my-3">{[title]}</p>
             <div className="px-4 setting-card-group border-radius">
-                <SupportCard isSetting={true} data={{ value: "修改密码" }} />
-                <SupportCard isSetting={true} data={{ value: "修改头像" }} />
-                <SupportCard isSetting={true} data={{ value: "修改地区" }} />
-                <SupportCard
-                    isSetting={true}
-                    data={{ value: "修改电子邮箱" }}
-                />
+                {data.map((item: any) => {
+                    return (
+                        <SupportCard
+                            isSetting={true}
+                            data={item}
+                            control={control}
+                            handleSubmit={handleSubmit}
+                        />
+                    );
+                })}
             </div>
         </>
     );

@@ -2,7 +2,8 @@
 
 .message {
     .message-body {
-        max-width: 45%;
+        max-width: 50%;
+        word-wrap: break-word;
         .message-text {
             padding: 0 1.25rem;
             background-color: color.$message-background-color;

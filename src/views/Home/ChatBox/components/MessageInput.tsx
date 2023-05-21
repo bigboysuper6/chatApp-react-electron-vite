@@ -4,19 +4,22 @@ import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { Form } from "reactstrap";
 import { useCallback, useState } from "react";
 import { throttle } from "@/utils/utils";
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 import { ChatFooterContext } from "..";
 import { ChatBoxContext } from "../..";
+import { sendFile } from "@/api/message";
 interface IMessageInputsProps {
     message: string;
+    file: File | null;
 }
 
 type IMessageInputProps = {};
 
 const MessageInput = () => {
     const {
+        register,
         handleSubmit,
         control,
         formState: { errors },
@@ -26,7 +29,9 @@ const MessageInput = () => {
             message: "",
         },
     });
+    const { ref, ...rest } = register("file");
     const { socket } = useContext(ChatBoxContext);
+    const inputRef = useRef<HTMLInputElement | null>(null);
 
     const roomId: string = useSelector<RootState, string>((state) => {
         return state.message.value.currentRoom;
@@ -42,7 +47,6 @@ const MessageInput = () => {
             socket.send(
                 JSON.stringify({
                     type: "message",
-                    source: "client",
                     content: data,
                     userId,
                     roomId,
@@ -52,11 +56,44 @@ const MessageInput = () => {
         }
     };
 
-    const onSubmit = (data: any) => {
-        if (data.message !== "") {
-            handleSend(data.message);
+    const handleSendFile = (data: string, fileSize: string) => {
+        if (socket.readyState === WebSocket.OPEN) {
+            console.log("发送message");
+            socket.send(
+                JSON.stringify({
+                    type: "message",
+                    content: data,
+                    userId,
+                    roomId,
+                    createAt: Date.now(),
+                    file: true,
+                    fileSize,
+                })
+            );
+        }
+    };
 
+    const onSubmit = async (data: any) => {
+        const { message, file } = data;
+        console.log(file);
+        if (message !== "") {
+            handleSend(message);
             reset({ message: "" });
+        }
+        if (file && file.length > 0) {
+            await sendFile({ file: file[0] }).then((res) => {
+                const path = res.data.file;
+                const fileSize = res.data.fileSize;
+                handleSendFile(path, fileSize);
+            });
+
+            reset({ file: null });
+        }
+    };
+
+    const handleInputClick = () => {
+        if (inputRef.current) {
+            inputRef.current?.click();
         }
     };
 
@@ -67,7 +104,23 @@ const MessageInput = () => {
                 onSubmit={handleSubmit(onSubmit)}
             >
                 <span className="btn btn-icon ">
-                    <SelectFileSvg />
+                    <input
+                        type="file"
+                        className="d-none"
+                        {...rest}
+                        id="file"
+                        ref={(e) => {
+                            ref(e);
+                            inputRef.current = e; // you can still assign to ref
+                        }}
+                    />
+                    <button
+                        className="btn btn-icon"
+                        type="submit"
+                        onClick={handleInputClick}
+                    >
+                        <SelectFileSvg />
+                    </button>
                 </span>
                 <Controller
                     render={({ field }) => (

@@ -25,5 +25,25 @@ const sendVerifyResult = (data: data) => {
     return request.service.post("/message/verify-result", formData);
 };
 
-export { sendMessage, sendVerifyResult, getMessage, getVerify, getRooms };
-2;
+const sendFile = (data: data) => {
+    const formData = convertToFormData(data);
+    return request.service.post("/message/file", formData);
+};
+
+const downloadFile = (args: data) => {
+    const params = convertToUrlParams(args);
+    return request.service.get("/message/download-file", {
+        params,
+        responseType: "blob",
+    });
+};
+
+export {
+    sendMessage,
+    sendVerifyResult,
+    getMessage,
+    getVerify,
+    getRooms,
+    sendFile,
+    downloadFile,
+};
