@@ -11,7 +11,7 @@ import { RootState } from "@/app/store";
 import { details } from "@/api/user";
 
 const useSocket = (url: string) => {
-    const [socket, setSocket] = useState(new WebSocket(url));
+    const socketRef = useRef<WebSocket | null>(null);
     const currentRoom = useSelector<RootState, string>((state) => {
         return state.message.value.currentRoom;
     });
@@ -20,6 +20,7 @@ const useSocket = (url: string) => {
     });
     const currentRoomRef = useRef<string>(currentRoom);
     const userIndexRef = useRef<string>(userIndex);
+    const timeoutRef = useRef<null | NodeJS.Timeout>(null);
     const dispatch = useDispatch();
 
     const getDetails = async () => {
@@ -35,11 +36,13 @@ const useSocket = (url: string) => {
         userIndexRef.current = userIndex;
     }, [currentRoom, userIndex]);
 
-    useEffect(() => {
-        const handleOpen = (event: any) => {
+    const createSocket = () => {
+        socketRef.current = new WebSocket(url);
+
+        socketRef.current.onopen = () => {
             console.log("WebSocket connected open");
             getDetails().then((res) => {
-                socket.send(
+                socketRef.current?.send(
                     JSON.stringify({
                         type: "join",
                         userId: res._id,
@@ -49,7 +52,7 @@ const useSocket = (url: string) => {
             });
         };
 
-        const handleMessage = (event: any) => {
+        socketRef.current.onmessage = (event) => {
             const message = JSON.parse(event.data);
             console.log(message);
             const {
@@ -78,8 +81,8 @@ const useSocket = (url: string) => {
                     dispatch(setChatRooms({ rooms }));
             } else if (type === "join") {
                 if (roomId !== undefined) {
-                    if (socket.readyState === WebSocket.OPEN) {
-                        socket.send(
+                    if (socketRef.current?.readyState === WebSocket.OPEN) {
+                        socketRef.current?.send(
                             JSON.stringify({
                                 type: "verify",
                                 userId,
@@ -103,24 +106,38 @@ const useSocket = (url: string) => {
             }
         };
 
-        const handleClose = (event: any) => {
-            console.log("WebSocket disconnected");
+        socketRef.current.onclose = () => {
+            reconnect();
         };
 
-        const handleError = (event: any) => {
-            console.error("WebSocket error:", event.error);
+        socketRef.current.onerror = (error) => {
+            reconnect();
         };
-        socket.addEventListener("open", handleOpen);
-        socket.addEventListener("message", handleMessage);
-        socket.addEventListener("close", handleClose);
-        socket.addEventListener("error", handleError);
+    };
+    useEffect(() => {
+        createSocket();
 
         return () => {
-            socket.close();
+            if (socketRef.current) {
+                socketRef.current.close();
+                socketRef.current.onopen = null;
+                socketRef.current.onmessage = null;
+                socketRef.current.onclose = null;
+                socketRef.current.onerror = null;
+            }
+            if (timeoutRef.current) clearTimeout(timeoutRef.current);
         };
     }, []);
 
-    return [socket];
+    const reconnect = () => {
+        if (timeoutRef.current) clearTimeout(timeoutRef.current);
+        timeoutRef.current = setTimeout(() => {
+            console.log("重连中");
+            createSocket();
+        }, 3000);
+    };
+
+    return [socketRef.current];
 };
 
 export default useSocket;

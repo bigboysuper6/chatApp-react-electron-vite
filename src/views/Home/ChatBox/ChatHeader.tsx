@@ -15,7 +15,7 @@ const ChatHeader = () => {
                         groupInfo.details?.name ?? groupInfo.members?.[0].name
                     }
                     groupMembersNumber={groupInfo?.number}
-                    isGroup={groupInfo?.number > 2}
+                    isGroup={groupInfo?.isGroup}
                 />
             </div>
         </>

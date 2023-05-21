@@ -71,7 +71,7 @@ const NotificationList = () => {
                     } else {
                         result = item.result;
                     }
-
+                    console.log(item.groupName, item.roomId);
                     return (
                         <>
                             <ChatCard
