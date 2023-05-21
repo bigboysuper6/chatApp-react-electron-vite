@@ -29,11 +29,13 @@ const Message = ({
     });
 
     const isUser = senderId === userId;
-    const avatar = isUser
-        ? groupInfo?.owner?.avatar
-        : groupInfo?.members?.find((item: any) => {
-              return item?._id === senderId;
-          })?.avatar;
+    const avatar = [groupInfo?.owner, ...groupInfo?.members].find(
+        (item: any) => {
+            console.log(item._id, senderId, "id");
+            return item?._id === senderId;
+        }
+    )?.avatar;
+    console.log(avatar, "avatar");
     //get width and height of image
     useEffect(() => {
         const image = new Image();

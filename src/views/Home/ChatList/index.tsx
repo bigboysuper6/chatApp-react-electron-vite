@@ -65,9 +65,9 @@ const ChatList = () => {
                                 )}
                                 avatar={
                                     item.memberDetails?.avatar ??
-                                    item.owner.avatar
+                                    item.owner?.avatar
                                 }
-                                isGroup={item.members.length > 1}
+                                isGroup={item.members?.length > 1}
                                 groupName={item.groupDetails?.name}
                                 membersAvatars={item.membersAvatars?.slice(
                                     0,
