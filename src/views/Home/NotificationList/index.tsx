@@ -40,9 +40,12 @@ const NotificationList = () => {
         senderVerify.sort((a: any, b: any) => {
             return a.createAt - b.createAt;
         });
-        return [...senderVerify, ...verify];
-    })();
 
+        return [...senderVerify, ...verify].filter(
+            (item: any) => item !== undefined
+        );
+    })();
+    console.log(allVerfiy, "allVerfiy");
     return (
         <>
             <div className="chat-list hidden-overflow px-4 bg-light">
