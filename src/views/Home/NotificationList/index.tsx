@@ -78,8 +78,10 @@ const NotificationList = () => {
                                 key={index}
                                 isNotification={true}
                                 text={
-                                    item.userId === userId
+                                    item.userId === userId && !item.result
                                         ? "已发送邀请"
+                                        : item.userId === userId && item.result
+                                        ? "已接收邀请"
                                         : item.content
                                 }
                                 name={item.name}
@@ -100,7 +102,11 @@ const NotificationList = () => {
                                 }
                                 isGroup={item.group}
                                 groupName={item.groupName}
-                                avatar={item.senderAvatar}
+                                avatar={
+                                    item.userId === userId && item.result
+                                        ? item.recevierAvatar
+                                        : item.senderAvatar
+                                }
                             />
                         </>
                     );

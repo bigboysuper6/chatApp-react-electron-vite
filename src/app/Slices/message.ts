@@ -43,7 +43,7 @@ export const messageSlice = createSlice({
             if (newestMessage) {
                 const index = state.value.chatRooms.findIndex(
                     (value: any, keys: any, arr: any) => {
-                        return value.roomId === roomId;
+                        return value._id === roomId;
                     }
                 );
                 if (index >= 0)
