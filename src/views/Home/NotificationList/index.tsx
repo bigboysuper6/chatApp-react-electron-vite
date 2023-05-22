@@ -52,6 +52,20 @@ const NotificationList = () => {
                 );
                 // 如果找到重复元素，则返回false，表示当前元素不会被保留
                 return duplicateIndex === -1;
+            })
+            .sort((a, b) => {
+                let compareA, compareB;
+                if (typeof a.result == "boolean") {
+                    compareA = a.updatedAt;
+                } else {
+                    compareA = a.createdAt;
+                }
+                if (typeof b.result == "boolean") {
+                    compareB = b.updatedAt;
+                } else {
+                    compareB = b.createdAt;
+                }
+                return compareB - compareA;
             });
     })();
     console.log(allVerfiy, "allVerfiy");

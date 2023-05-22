@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { deduplicatedArray } from "@/utils/utils";
+import { deduplicateObjectArray } from "@/utils/utils";
 export const messageSlice = createSlice({
     name: "message",
     initialState: {
@@ -15,8 +15,9 @@ export const messageSlice = createSlice({
         setVerify: (state, action) => {
             const verify = action.payload;
             if (verify)
-                state.value.verify = deduplicatedArray(state.value.verify, [
-                    verify,
+                state.value.verify = deduplicateObjectArray([
+                    ...state.value.verify,
+                    ...[verify],
                 ]);
         },
 
@@ -28,10 +29,10 @@ export const messageSlice = createSlice({
             const { rooms } = action.payload;
             console.log(rooms);
             if (rooms)
-                state.value.chatRooms = deduplicatedArray(
-                    state.value.chatRooms,
-                    rooms
-                );
+                state.value.chatRooms = deduplicateObjectArray([
+                    ...state.value.chatRooms,
+                    ...rooms,
+                ]);
         },
 
         resetChatRooms: (state) => {

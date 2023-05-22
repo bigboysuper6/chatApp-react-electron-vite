@@ -95,6 +95,22 @@ const deteleAttributes = (object: data, name: any[]) => {
     }
     return newObject;
 };
+
+function deduplicateObjectArray(array: object[]): object[] {
+    const uniqueArray: object[] = [];
+    const map = new Map<string, object>();
+
+    for (const item of array) {
+        const itemKey = JSON.stringify(item);
+        if (!map.has(itemKey)) {
+            map.set(itemKey, item);
+            uniqueArray.push(item);
+        }
+    }
+
+    return uniqueArray;
+}
+
 export {
     convertToFormData,
     convertToUrlParams,
@@ -103,4 +119,5 @@ export {
     extractAttributes,
     deduplicatedArray,
     deteleAttributes,
+    deduplicateObjectArray,
 };
