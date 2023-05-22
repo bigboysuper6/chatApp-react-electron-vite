@@ -22,17 +22,18 @@ const Home = () => {
     const [isDisplay, setIsDisplay] = useState(false);
     const [visible, setVisible] = useState(false);
     const [active, handleActive] = useActive(0);
-    const { socket } = useSocket(import.meta.env.VITE_APP_SOCKET_URL);
+    const [socket] = useSocket(import.meta.env.VITE_APP_SOCKET_URL);
+    console.log(socket, "socket");
     const dispatch = useDispatch();
 
-    const [AsideComponents] = useState([
+    const AsideComponents = [
         <ChatList />,
         <FriendList socket={socket} />,
         <CreateGroupChat socket={socket} />,
         <NotificationList />,
         // <SupportList />,
         <SettingList />,
-    ]);
+    ];
 
     // useEffect(() => {
     //     if (!visible) setIsDisplay(false);

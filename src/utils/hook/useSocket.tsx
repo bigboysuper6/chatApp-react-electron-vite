@@ -12,6 +12,7 @@ import { details } from "@/api/user";
 
 const useSocket = (url: string) => {
     const socketRef = useRef<WebSocket | null>(null);
+    const [socket, setSocket] = useState<WebSocket | null>(null);
     const currentRoom = useSelector<RootState, string>((state) => {
         return state.message.value.currentRoom;
     });
@@ -38,7 +39,7 @@ const useSocket = (url: string) => {
 
     const createSocket = () => {
         socketRef.current = new WebSocket(url);
-
+        setSocket(socketRef.current);
         socketRef.current.onopen = () => {
             console.log("WebSocket connected open");
             getDetails().then((res) => {
@@ -137,7 +138,7 @@ const useSocket = (url: string) => {
         }, 3000);
     };
 
-    return { socket: socketRef.current };
+    return [socket];
 };
 
 export default useSocket;

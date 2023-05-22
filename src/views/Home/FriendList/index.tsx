@@ -53,6 +53,7 @@ const FriendList = ({ socket, rooms }: IFriendListProps) => {
             let { user, exist } = await getUser({ phoneNumber }).then((res) => {
                 return res.data;
             });
+            console.log(socket);
             if (exist) {
                 if (socket.readyState === WebSocket.OPEN) {
                     socket.send(
