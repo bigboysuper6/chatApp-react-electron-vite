@@ -137,7 +137,7 @@ const useSocket = (url: string) => {
         }, 3000);
     };
 
-    return [socketRef.current];
+    return { socket: socketRef.current };
 };
 
 export default useSocket;
