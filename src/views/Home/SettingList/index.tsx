@@ -90,8 +90,9 @@ const SettingList = () => {
 
         if (avatar?.length > 0) {
             // console.log(data);
-            await changeAvatar({ avatar: avatar[0] });
-            dispatch(setAvatar({ avatar }));
+            await changeAvatar({ avatar: avatar[0] }).then((res) => {
+                dispatch(setAvatar({ avatar: res.data.avatar }));
+            });
             reset({ avatar: "" });
         }
     };

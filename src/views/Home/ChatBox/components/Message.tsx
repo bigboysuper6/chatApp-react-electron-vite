@@ -54,7 +54,7 @@ const Message = ({
 
     const handleDownload = async () => {
         await downloadFile({
-            filename: message.replace("http://localhost:3000/files/", ""),
+            filename: message,
         })
             .then((response) => {
                 const url = URL.createObjectURL(response.data);
@@ -105,9 +105,7 @@ const Message = ({
                             </button>
                         </Col>
                         <Col className="">
-                            <div>
-                                {message.slice(message.lastIndexOf("_") + 1)}
-                            </div>
+                            <div>{message.split("_").slice(2).join("_")}</div>
                             <div>{fileSize}</div>
                         </Col>
                     </Row>

@@ -45,7 +45,11 @@ const People = ({
                 <Row className={`align-items-center ${isFiles ? "ms-0" : ""} `}>
                     {isFiles ? (
                         <>
-                            <AvatarGroup avatars={avatars ?? []} Svg={Svg} />
+                            <AvatarGroup
+                                avatars={avatars ?? []}
+                                Svg={Svg}
+                                isGroup={true}
+                            />
                             <Col className="px-0">
                                 <h4 className="my-0">{name}</h4>
                                 <p className="text-color my-0">{fileSize}</p>
