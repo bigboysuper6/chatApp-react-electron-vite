@@ -4,7 +4,7 @@ import { ReactComponent as ThreeDots } from "@assets/threeDots.svg";
 import Avatar from "@/components/Avatar";
 import { useCallback, useState, useContext } from "react";
 import { sendVerifyResult } from "@/api/message";
-import { setChatRooms } from "@/app/Slices/message";
+import { addChatRooms } from "@/app/Slices/message";
 import { addFriend } from "@/api/friend";
 import { useSelector, useDispatch } from "react-redux";
 import { AsideContext } from "@/views/Home";
@@ -81,7 +81,7 @@ const ChatCard = ({
         if (socket.readyState === WebSocket.OPEN) {
             socket.send(JSON.stringify({ verify, type: "verify", rooms }));
         }
-        dispatch(setChatRooms({ rooms }));
+        dispatch(addChatRooms({ room: rooms }));
     }, []);
 
     const onClickRefuse = useCallback(async () => {

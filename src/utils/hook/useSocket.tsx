@@ -65,7 +65,6 @@ const useSocket = (url: string) => {
                 source,
                 recevierId,
                 userId,
-
                 groupName,
                 verify,
                 rooms,
