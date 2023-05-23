@@ -28,11 +28,23 @@ export const messageSlice = createSlice({
         setChatRooms: (state, action) => {
             const { rooms } = action.payload;
             console.log(rooms);
-            if (rooms)
-                state.value.chatRooms = deduplicateObjectArray([
-                    ...state.value.chatRooms,
-                    ...rooms,
-                ]);
+            if (rooms) state.value.chatRooms = rooms;
+        },
+        addChatRooms: (state, action) => {
+            const { room } = action.payload;
+            if (room) {
+                const sameRoomIndex = state.value.chatRooms.findIndex(
+                    (item: any) => {
+                        console.log(item._id, room._id);
+                        item._id == room._id;
+                    }
+                );
+                console.log(sameRoomIndex);
+                if (sameRoomIndex >= 0) {
+                    state.value.chatRooms.splice(sameRoomIndex, 1);
+                }
+                state.value.chatRooms.push(room);
+            }
         },
 
         resetChatRooms: (state) => {
@@ -83,6 +95,7 @@ export const {
     setMessages,
     resetChatRooms,
     setGroupInfo,
+    addChatRooms,
 } = messageSlice.actions;
 
 export default messageSlice.reducer;

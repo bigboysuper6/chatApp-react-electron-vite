@@ -15,11 +15,15 @@ const getVerify = (args: data) => {
     const params = convertToUrlParams(args);
     return request.service.get("/message/verify", { params });
 };
+
 const getRooms = (args: data) => {
     const params = convertToUrlParams(args);
     return request.service.get("/message/rooms", { params });
 };
-
+const getRoom = (args: data) => {
+    const params = convertToUrlParams(args);
+    return request.service.get("/message/room", { params });
+};
 const sendVerifyResult = (data: data) => {
     const formData = convertToFormData(data);
     return request.service.post("/message/verify-result", formData);
@@ -46,4 +50,5 @@ export {
     getRooms,
     sendFile,
     downloadFile,
+    getRoom,
 };

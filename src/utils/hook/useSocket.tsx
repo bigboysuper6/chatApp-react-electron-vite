@@ -4,7 +4,7 @@ import {
     setVerify,
     setMessages,
     setNewestMessage,
-    setChatRooms,
+    addChatRooms,
 } from "@/app/Slices/message";
 import { setUserInfo } from "@/app/Slices/user";
 import { RootState } from "@/app/store";
@@ -79,7 +79,7 @@ const useSocket = (url: string) => {
                         dispatch(setVerify(verify));
                     }
                 if (verify !== true && verify.result === true)
-                    dispatch(setChatRooms({ rooms }));
+                    dispatch(addChatRooms({ room: rooms }));
             } else if (type === "join") {
                 if (roomId !== undefined) {
                     if (socketRef.current?.readyState === WebSocket.OPEN) {

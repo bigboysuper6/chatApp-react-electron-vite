@@ -9,7 +9,7 @@ import { addFriend } from "@/api/friend";
 import { useSelector, useDispatch } from "react-redux";
 import { AsideContext } from "@/views/Home";
 import { addGroup } from "@/api/group";
-import { getRooms } from "@/api/message";
+import { getRoom } from "@/api/message";
 type ChatCardProps = {
     isGroup?: boolean;
     isNotification?: Boolean;
@@ -72,12 +72,12 @@ const ChatCard = ({
             });
         }
 
-        const rooms = await getRooms({ userId: verify.userId }).then((res) => {
+        const rooms = await getRoom({ roomId: verify.roomId }).then((res) => {
             const verify = res.data.roomsAgree;
             console.log(verify, userId, "verify");
             return verify;
         });
-
+        console.log(rooms);
         if (socket.readyState === WebSocket.OPEN) {
             socket.send(JSON.stringify({ verify, type: "verify", rooms }));
         }
