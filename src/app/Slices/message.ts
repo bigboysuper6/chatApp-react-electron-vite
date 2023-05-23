@@ -30,13 +30,15 @@ export const messageSlice = createSlice({
             console.log(rooms);
             if (rooms) state.value.chatRooms = rooms;
         },
+
         addChatRooms: (state, action) => {
             const { room } = action.payload;
+            console.log(room);
             if (room) {
                 const sameRoomIndex = state.value.chatRooms.findIndex(
                     (item: any) => {
                         console.log(item._id, room._id);
-                        item._id == room._id;
+                        return item._id == room._id;
                     }
                 );
                 console.log(sameRoomIndex);

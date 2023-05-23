@@ -20,13 +20,19 @@ const ChatList = () => {
     const userId = useSelector((state: any) => {
         return state.user.value.userInfo._id;
     });
-
+    const currentRoom = useSelector(
+        (state: any) => state.message.value.currentRoom
+    );
     useEffect(() => {
         if (userId) getTheRooms();
         return () => {
             dispatch(resetChatRooms());
         };
     }, [userId]);
+    const room = rooms.find((item: any) => item._id == currentRoom);
+    useEffect(() => {
+        if (currentRoom !== "") handleClick(currentRoom);
+    }, [room]);
 
     const getTheRooms = async () => {
         const rooms = await getRooms({ userId }).then((res) => {
@@ -37,6 +43,7 @@ const ChatList = () => {
     };
 
     const handleClick = async (roomId: string) => {
+        console.log("执行一次handleClick");
         setVisible(true);
         dispatch(setCurrentRoom({ roomId }));
         const groupInfo = await groupMembers({ roomId }).then((res) => {
