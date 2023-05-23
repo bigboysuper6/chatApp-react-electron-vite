@@ -71,10 +71,13 @@ const ChatCard = ({
                 purpose: verify.content,
             });
         }
-        const rooms = await getRooms({ userId }).then((res) => {
+
+        const rooms = await getRooms({ userId: verify.userId }).then((res) => {
             const verify = res.data.roomsAgree;
+            console.log(verify, userId, "verify");
             return verify;
         });
+
         if (socket.readyState === WebSocket.OPEN) {
             socket.send(JSON.stringify({ verify, type: "verify", rooms }));
         }
