@@ -16,7 +16,7 @@ const FileTab = () => {
         } else {
             return groupInfo.members?.find((item: any) => {
                 return item?._id == userId;
-            }).avatar;
+            })?.avatar;
         }
     };
 
