@@ -99,7 +99,7 @@ const SettingList = () => {
     return (
         <>
             <div className="chat-list hidden-overflow px-4 bg-light ">
-                <h2 className="fw-bold">通知</h2>
+                <h2 className="fw-bold">设置</h2>
                 <Search />
                 {settingGroup.map((item: any) => {
                     return (

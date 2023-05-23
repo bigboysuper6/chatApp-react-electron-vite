@@ -53,6 +53,7 @@ const ChatList = () => {
                 <h2 className="fw-bold">对话</h2>
                 <Search />
                 {rooms.map((item: any) => {
+                    console.log(userId, item.owner?._id);
                     return (
                         <>
                             <ChatCard
@@ -61,8 +62,8 @@ const ChatList = () => {
                                 name={
                                     item.members?.length > 1
                                         ? item.owner?.name
-                                        : userId === item.owner?.id
-                                        ? item.memverDetails?.name
+                                        : userId === item.owner?._id
+                                        ? item.memberDetails?.name
                                         : item.owner?.name
                                 }
                                 roomId={item.roomId}
@@ -72,8 +73,8 @@ const ChatList = () => {
                                 avatar={
                                     item.members?.length > 1
                                         ? item.owner?.avatar
-                                        : userId === item.owner?.id
-                                        ? item.memverDetails?.avatar
+                                        : userId === item.owner?._id
+                                        ? item.memberDetails?.avatar
                                         : item.owner?.avatar
                                 }
                                 isGroup={item.members?.length > 1}

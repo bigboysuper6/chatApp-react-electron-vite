@@ -29,6 +29,7 @@ const Message = ({
     });
 
     const isUser = senderId === userId;
+
     const avatar = (() => {
         if (groupInfo?.owner && groupInfo?.members) {
             return [groupInfo?.owner, ...groupInfo?.members].find(
@@ -40,6 +41,7 @@ const Message = ({
             return undefined;
         }
     })();
+
     console.log(avatar, "avatar");
     useEffect(() => {
         const image = new Image();
