@@ -30,7 +30,7 @@ const ChatInfoBody = () => {
     })();
 
     const groupPurpose = (() => {
-        if (groupInfo.members?.length > 1) {
+        if (groupInfo?.isGroup) {
             return groupInfo.details?.purpose;
         } else {
             return `欢迎来到与${

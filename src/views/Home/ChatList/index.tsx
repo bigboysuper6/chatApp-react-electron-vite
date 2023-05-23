@@ -79,11 +79,11 @@ const ChatList = () => {
                                 }
                                 isGroup={item.members?.length > 1}
                                 groupName={item.groupDetails?.name}
-                                membersAvatars={item.membersAvatars?.slice(
+                                membersAvatars={item.allowMembersAvatars?.slice(
                                     0,
                                     3
                                 )}
-                                membersNumber={item.membersAvatars?.length + 1}
+                                membersNumber={item.allowMembers?.length + 1}
                             />
                         </>
                     );
