@@ -2,6 +2,7 @@ import People from "@/components/People";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 import { ReactComponent as FileSvg } from "@assets/file.svg";
+import { downloadFile } from "@/api/message";
 const FileTab = () => {
     const messages = useSelector<RootState, any[]>((state) => {
         return state.message.value.messages;
@@ -19,7 +20,25 @@ const FileTab = () => {
             })?.avatar;
         }
     };
+    const handleDownload = async (message: any) => {
+        await downloadFile({
+            filename: message,
+        })
+            .then((response) => {
+                const url = URL.createObjectURL(response.data);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = message.slice(message.lastIndexOf("_") + 1); // 指定下载时的文件名
+                a.click();
+                URL.revokeObjectURL(url);
+            })
+            .catch((error) => {
+                console.error("Download error:", error);
+            });
+    };
 
+    const menuItems = ["下载"];
+    const handleEvents = [handleDownload];
     return (
         <>
             {messages.map((item) => {
@@ -36,6 +55,11 @@ const FileTab = () => {
                             fileSize={item.fileSize}
                             avatars={[avatar]}
                             Svg={<FileSvg />}
+                            menuItems={menuItems}
+                            handleEvents={handleEvents.map(
+                                (cur) => () => cur(item.content)
+                            )}
+                            direction={"dropstart"}
                         />
                     );
                 }

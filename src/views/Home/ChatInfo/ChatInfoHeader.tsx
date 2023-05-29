@@ -2,10 +2,14 @@ import { ReactComponent as ArrowLeftSvg } from "@assets/arrowLeft.svg";
 import { ReactComponent as ThreeDotsVerticalSvg } from "@assets/threeDotsVertical.svg";
 import { ChatInfoContext } from "..";
 import { useContext } from "react";
-import ToolTip from "../../../components/ToolTip";
-
+import DropdownMenu from "@/components/DropdownMenu";
 const ChatInfoHeader = () => {
     const { setIsDisplay } = useContext(ChatInfoContext);
+    const handleDelete = () => {
+        console.log("解散群组");
+    };
+    const menuItems = ["解散群组"];
+    const handleEvents = [handleDelete];
     return (
         <>
             <div className="chat-info-header pb-4 border-bottom">
@@ -14,7 +18,11 @@ const ChatInfoHeader = () => {
                         <ArrowLeftSvg onClick={() => setIsDisplay(false)} />
                     </div>
                     <div>
-                        <ToolTip />
+                        <DropdownMenu
+                            menuItems={menuItems}
+                            handleEvents={handleEvents}
+                            direction={"dropstart"}
+                        />
                     </div>
                 </div>
             </div>

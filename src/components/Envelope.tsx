@@ -12,12 +12,14 @@ type EnvelopeProps = {
     isAddFirend?: boolean;
     isHomePage?: boolean;
     title?: string;
+    avatar?: string;
 };
 
 export const EnvelopeTitle = ({
     isAddFirend,
     isHomePage,
     title,
+    avatar,
 }: EnvelopeProps) => {
     const user = useSelector((state: any) => {
         return state.user.value.userInfo;
@@ -29,7 +31,7 @@ export const EnvelopeTitle = ({
                 <div className="d-flex justify-content-center">
                     <div className="position-relative envelop-svg rounded-circle d-inline-block">
                         {isHomePage ? (
-                            <Avatar avatar={user.avatar} />
+                            <Avatar avatar={avatar ?? user.avatar} />
                         ) : (
                             <div className="text-center envelop-img-svg">
                                 {isAddFirend ? <AddFriendSvg /> : <ImgSvg />}
@@ -51,6 +53,7 @@ export const EnvelopeTitle = ({
         </>
     );
 };
+
 type EnvelopeBodyProps = {
     isAddFirend?: boolean;
     control: Control<
@@ -62,8 +65,13 @@ type EnvelopeBodyProps = {
         },
         any
     >;
+    isAddMembers?: boolean;
 };
-export const EnvelopeBody = ({ isAddFirend, control }: EnvelopeBodyProps) => {
+export const EnvelopeBody = ({
+    isAddFirend,
+    control,
+    isAddMembers,
+}: EnvelopeBodyProps) => {
     return (
         <>
             <div className="envelop-body">
@@ -72,7 +80,7 @@ export const EnvelopeBody = ({ isAddFirend, control }: EnvelopeBodyProps) => {
                         <Col className="col-12">
                             <FormGroup>
                                 <Label for="exampleEmail">
-                                    {isAddFirend
+                                    {isAddFirend || isAddMembers
                                         ? "请输入账号(手机号)"
                                         : "请输入群聊的名称"}
                                 </Label>
@@ -80,7 +88,7 @@ export const EnvelopeBody = ({ isAddFirend, control }: EnvelopeBodyProps) => {
                                     render={({ field }) => (
                                         <Input
                                             id={
-                                                isAddFirend
+                                                isAddFirend || isAddMembers
                                                     ? "phoneNumber"
                                                     : "groupName"
                                             }
@@ -90,38 +98,42 @@ export const EnvelopeBody = ({ isAddFirend, control }: EnvelopeBodyProps) => {
                                     )}
                                     control={control}
                                     name={
-                                        isAddFirend
+                                        isAddFirend || isAddMembers
                                             ? "phoneNumber"
                                             : "groupName"
                                     }
                                 />
                             </FormGroup>
                         </Col>
-                        <Col className="col-12">
-                            <FormGroup>
-                                <Label for="exampleText">
-                                    {isAddFirend
-                                        ? "请输入验证信息"
-                                        : "创建群聊的目的?"}
-                                </Label>
-                                <Controller
-                                    render={({ field }) => (
-                                        <Input
-                                            id={
-                                                isAddFirend
-                                                    ? "verify"
-                                                    : "purpose"
-                                            }
-                                            type="textarea"
-                                            className="border-0"
-                                            {...field}
-                                        />
-                                    )}
-                                    control={control}
-                                    name={isAddFirend ? "verify" : "purpose"}
-                                />
-                            </FormGroup>
-                        </Col>
+                        {!isAddMembers && (
+                            <Col className="col-12">
+                                <FormGroup>
+                                    <Label for="exampleText">
+                                        {isAddFirend
+                                            ? "请输入验证信息"
+                                            : "创建群聊的目的?"}
+                                    </Label>
+                                    <Controller
+                                        render={({ field }) => (
+                                            <Input
+                                                id={
+                                                    isAddFirend
+                                                        ? "verify"
+                                                        : "purpose"
+                                                }
+                                                type="textarea"
+                                                className="border-0"
+                                                {...field}
+                                            />
+                                        )}
+                                        control={control}
+                                        name={
+                                            isAddFirend ? "verify" : "purpose"
+                                        }
+                                    />
+                                </FormGroup>
+                            </Col>
+                        )}
                     </Row>
                 </Form>
             </div>
@@ -131,7 +143,6 @@ export const EnvelopeBody = ({ isAddFirend, control }: EnvelopeBodyProps) => {
 
 const Envelope = () => {
     const { control } = useContext(TabListContext);
-
     return (
         <>
             <EnvelopeTitle />

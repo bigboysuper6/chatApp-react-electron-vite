@@ -101,7 +101,7 @@ const SettingList = () => {
         <>
             <div className="chat-list hidden-overflow px-4 bg-light ">
                 <h2 className="fw-bold">设置</h2>
-                <Search />
+                {/* <Search /> */}
                 {settingGroup.map((item: any) => {
                     return (
                         <SettingCardGroup

@@ -9,7 +9,8 @@ import {
 import { setUserInfo } from "@/app/Slices/user";
 import { RootState } from "@/app/store";
 import { details } from "@/api/user";
-
+import { deleteChatRoom } from "@/app/Slices/message";
+import { deleteFriend as deleteFriendLocal } from "@/app/Slices/user";
 const useSocket = (url: string) => {
     const socketRef = useRef<WebSocket | null>(null);
     const [socket, setSocket] = useState<WebSocket | null>(null);
@@ -94,6 +95,24 @@ const useSocket = (url: string) => {
                         );
                     }
                 }
+            } else if (type === "join_room") {
+                if (roomId !== undefined) {
+                    if (socketRef.current?.readyState === WebSocket.OPEN) {
+                        socketRef.current?.send(
+                            JSON.stringify({
+                                type: "join_verify",
+                                userId,
+                                content,
+                                createdAt: Date.now(),
+                                roomId,
+                                groupName,
+                            })
+                        );
+                    }
+                }
+            } else if (type == "deleteFriend") {
+                dispatch(deleteChatRoom({ roomId }));
+                dispatch(deleteFriendLocal({ friendId: userId }));
             } else {
                 if (currentRoomRef.current === roomId)
                     dispatch(setMessages({ messages: [message] }));

@@ -41,6 +41,17 @@ export const userSlice = createSlice({
             const { avatar } = action.payload;
             state.value.userInfo.avatar = avatar;
         },
+        deleteFriend: (state, action) => {
+            const { friendId } = action.payload;
+            state.value.userInfo.friends = state.value.userInfo.friends.map(
+                (item: any) => {
+                    item.groupArr = item.groupArr.filter(
+                        (cur: any) => cur._id !== friendId
+                    );
+                    return item;
+                }
+            );
+        },
     },
 });
 
@@ -53,6 +64,7 @@ export const {
     setEmail,
     setName,
     setAvatar,
+    deleteFriend,
 } = userSlice.actions;
 
 export default userSlice.reducer;

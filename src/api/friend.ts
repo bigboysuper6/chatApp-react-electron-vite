@@ -11,8 +11,8 @@ const friend = (data: data) => {
     return request.service.get("friend", { params });
 };
 
-const deletleFriend = (id: string) => {
+const deleteFriend = (id: string) => {
     return request.service.get(`friend/${id}`);
 };
 
-export { addFriend, friend, deletleFriend };
+export { addFriend, friend, deleteFriend };

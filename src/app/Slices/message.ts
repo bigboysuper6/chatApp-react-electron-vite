@@ -84,6 +84,15 @@ export const messageSlice = createSlice({
             const { groupInfo } = action.payload;
             state.value.groupInfo = groupInfo;
         },
+
+        deleteChatRoom: (state, action) => {
+            const { roomId } = action.payload;
+            state.value.chatRooms = state.value.chatRooms.filter(
+                (item: any) => {
+                    return item._id !== roomId;
+                }
+            );
+        },
     },
 });
 
@@ -98,6 +107,7 @@ export const {
     resetChatRooms,
     setGroupInfo,
     addChatRooms,
+    deleteChatRoom,
 } = messageSlice.actions;
 
 export default messageSlice.reducer;

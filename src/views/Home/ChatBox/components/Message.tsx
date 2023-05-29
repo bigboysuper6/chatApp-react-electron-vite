@@ -4,7 +4,8 @@ import { Col, Row } from "reactstrap";
 import { ReactComponent as DownloadFileSvg } from "@assets/downloadFile.svg";
 import { downloadFile } from "@/api/message";
 import { useSelector, useDispatch } from "react-redux";
-
+import { useContext } from "react";
+import { HomeContext } from "../..";
 type MessageProps = {
     message: string;
     type: "message" | "img" | "file";
@@ -21,6 +22,7 @@ const Message = ({
     senderId,
 }: MessageProps) => {
     const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+    const { setImg, imagePreviewToggle } = useContext(HomeContext);
     const userId = useSelector((state: any) => {
         return state.user.value.userInfo._id;
     });
@@ -41,7 +43,10 @@ const Message = ({
             return undefined;
         }
     })();
-
+    const handlePreview = (img: string) => {
+        setImg(img);
+        imagePreviewToggle();
+    };
     console.log(avatar, "avatar");
     useEffect(() => {
         const image = new Image();
@@ -86,6 +91,7 @@ const Message = ({
                                 : "auto",
                     }}
                     className="border-radius"
+                    onClick={() => handlePreview(message)}
                 />
             );
         } else if (type === "file") {

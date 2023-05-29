@@ -60,7 +60,7 @@ const CreateGroupChat = ({ socket }: CreateGroupChatProps) => {
         <>
             <div className="create-group-chat hidden-overflow px-4 bg-light  ">
                 <h2 className="fw-bold">创建群聊</h2>
-                <Search />
+                {/* <Search /> */}
                 <Tab
                     textList={["细节", "邀请"]}
                     active={active}

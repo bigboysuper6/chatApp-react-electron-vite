@@ -10,7 +10,7 @@ import {
     Button,
 } from "reactstrap";
 import { ReactComponent as ArrowRightSvg } from "@assets/arrowRight.svg";
-import { useState } from "react";
+import { ReactElement, useState } from "react";
 import { Controller } from "react-hook-form";
 
 type SupportCardProps = {
@@ -23,7 +23,9 @@ type SupportCardProps = {
         type?: string;
     };
     control?: any;
-    handleSubmit: any;
+    handleSubmit?: any;
+    type?: "peopleInfo";
+    Svg?: ReactElement;
 };
 
 const SupportCard = ({
@@ -33,6 +35,8 @@ const SupportCard = ({
     data,
     control,
     handleSubmit,
+    type,
+    Svg,
 }: SupportCardProps) => {
     const [rotation, setRotation] = useState(0);
 
@@ -77,16 +81,19 @@ const SupportCard = ({
                                         <ArrowRightSvg />
                                     </a>
                                 )}
-                                {isSetting && (
-                                    <a className="text-color">
-                                        <ArrowRightSvg
-                                            style={{
-                                                transform: `rotate(${rotation}deg)`,
-                                            }}
-                                            onClick={handleClick}
-                                        />
-                                    </a>
-                                )}
+                                {isSetting &&
+                                    (type == "peopleInfo" ? (
+                                        Svg
+                                    ) : (
+                                        <a className="text-color">
+                                            <ArrowRightSvg
+                                                style={{
+                                                    transform: `rotate(${rotation}deg)`,
+                                                }}
+                                                onClick={handleClick}
+                                            />
+                                        </a>
+                                    ))}
                             </Col>
                         </Row>
                     </div>

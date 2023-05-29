@@ -6,6 +6,7 @@ type AvatarGroupProps = {
     number?: string;
     isChatHeader?: boolean | undefined;
     isGroup?: boolean;
+    onClick?: () => void;
 };
 const AvatarGroup = ({
     Svg,
@@ -13,6 +14,7 @@ const AvatarGroup = ({
     number,
     isChatHeader,
     isGroup,
+    onClick,
 }: AvatarGroupProps) => {
     return (
         <>
@@ -21,7 +23,10 @@ const AvatarGroup = ({
                     return <Avatar avatar={item} />;
                 })}
                 {isGroup && (
-                    <div className="rounded-circle fs-6 group-member-count fw-semibold avatar">
+                    <div
+                        className="rounded-circle fs-6 group-member-count fw-semibold avatar"
+                        onClick={onClick}
+                    >
                         {Svg ?? (isChatHeader ? "+" : "+" + number)}
                     </div>
                 )}

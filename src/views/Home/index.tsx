@@ -13,9 +13,13 @@ import useSocket from "@/utils/hook/useSocket";
 import { friend } from "@/api/friend";
 import { setFriends } from "@/app/Slices/user";
 import { useDispatch } from "react-redux";
+import useOpen from "@/utils/hook/useOpen";
+import PeopleInfo from "@/components/PeopleInfo";
+import ImagePreview from "@/components/ImagePreview";
 export const ChatBoxContext = createContext<any>({});
 export const ChatInfoContext = createContext<any>({});
 export const AsideContext = createContext<any>({});
+export const HomeContext = createContext<any>({});
 
 const Home = () => {
     //control chatinfo display or not
@@ -25,6 +29,10 @@ const Home = () => {
     const [socket] = useSocket(import.meta.env.VITE_APP_SOCKET_URL);
     console.log(socket, "socket");
     const dispatch = useDispatch();
+    const [peopleInfoModal, peopleInfoToggle] = useOpen(false);
+    const [imagePreviewModal, imagePreviewToggle] = useOpen(false);
+    const [peopleData, setPeopleData] = useState({});
+    const [img, setImg] = useState("");
 
     const AsideComponents = [
         <ChatList />,
@@ -59,37 +67,73 @@ const Home = () => {
 
     return (
         <>
-            <div
-                className={`home d-grid container-fluid p-0 ${
-                    isDisplay
-                        ? "home-grid-template-columns-4"
-                        : "home-grid-template-columns-3"
-                }`}
+            <HomeContext.Provider
+                value={{
+                    peopleInfoToggle,
+                    setPeopleData,
+                    setImg,
+                    imagePreviewToggle,
+                }}
             >
-                <NavBar active={active} handleActive={handleActive} />
-                <AsideContext.Provider value={{ setVisible, socket }}>
-                    {AsideComponents.map((item, index) => {
-                        return (
-                            <div
-                                key={index}
-                                className={`${
-                                    active === index ? "" : "d-none"
-                                } position-relative`}
-                            >
-                                {item}
-                            </div>
-                        );
-                    })}
-                </AsideContext.Provider>
-                <ChatBoxContext.Provider value={{ handleSetIsDisplay, socket }}>
-                    <div className={` ${visible ? "visible" : "invisible"}`}>
-                        <ChatBox />
-                    </div>
-                </ChatBoxContext.Provider>
-                <ChatInfoContext.Provider value={{ setIsDisplay }}>
-                    <ChatInfo isDisplay={isDisplay && visible} />
-                </ChatInfoContext.Provider>
-            </div>
+                <div
+                    className={`home d-grid container-fluid p-0 ${
+                        isDisplay
+                            ? "home-grid-template-columns-4"
+                            : "home-grid-template-columns-3"
+                    }`}
+                >
+                    <NavBar active={active} handleActive={handleActive} />
+                    <AsideContext.Provider
+                        value={{
+                            setVisible,
+                            socket,
+                            peopleInfoToggle,
+                            setPeopleData,
+                        }}
+                    >
+                        {AsideComponents.map((item, index) => {
+                            return (
+                                <div
+                                    key={index}
+                                    className={`${
+                                        active === index ? "" : "d-none"
+                                    } position-relative`}
+                                >
+                                    {item}
+                                </div>
+                            );
+                        })}
+                    </AsideContext.Provider>
+                    <ChatBoxContext.Provider
+                        value={{ handleSetIsDisplay, socket }}
+                    >
+                        <div
+                            className={` ${visible ? "visible" : "invisible"}`}
+                        >
+                            <ChatBox />
+                        </div>
+                    </ChatBoxContext.Provider>
+                    <ChatInfoContext.Provider
+                        value={{
+                            setIsDisplay,
+                            peopleInfoToggle,
+                            setPeopleData,
+                        }}
+                    >
+                        <ChatInfo isDisplay={isDisplay && visible} />
+                    </ChatInfoContext.Provider>
+                </div>
+                <PeopleInfo
+                    data={peopleData}
+                    toggle={peopleInfoToggle}
+                    modal={peopleInfoModal}
+                />
+                <ImagePreview
+                    img={img}
+                    toggle={imagePreviewToggle}
+                    modal={imagePreviewModal}
+                ></ImagePreview>
+            </HomeContext.Provider>
         </>
     );
 };

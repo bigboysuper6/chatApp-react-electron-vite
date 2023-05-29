@@ -10,6 +10,7 @@ type ChatInfoRowProps = {
     groupMembersNumber?: string;
     membersAvatars?: string[];
     isGroup?: boolean;
+    handleAddMember?: () => void;
 };
 const ChatInfoRow = ({
     isChatHeader,
@@ -17,6 +18,7 @@ const ChatInfoRow = ({
     groupMembersNumber,
     membersAvatars,
     isGroup,
+    handleAddMember,
 }: ChatInfoRowProps) => {
     const { handleSetIsDisplay } = useContext(ChatBoxContext);
 
@@ -61,6 +63,7 @@ const ChatInfoRow = ({
                     number={groupMembersNumber}
                     isChatHeader={isChatHeader}
                     isGroup={isGroup}
+                    onClick={handleAddMember}
                 />
             </Row>
         </>

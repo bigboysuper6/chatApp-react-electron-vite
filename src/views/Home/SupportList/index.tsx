@@ -5,7 +5,7 @@ const SupportList = () => {
         <>
             <div className="chat-list hidden-overflow px-4 bg-light ">
                 <h2 className="fw-bold">支持</h2>
-                <Search />
+                {/* <Search /> */}
                 <SupportCard
                     data={{ title: "profile", value: "chage profile" }}
                 />

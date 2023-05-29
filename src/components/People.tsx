@@ -2,10 +2,11 @@ import { Col, Row, Input, FormGroup } from "reactstrap";
 import { ReactComponent as ThreeDotsVerticalSvg } from "@assets/threeDotsVertical.svg";
 import Avatar from "./Avatar";
 import AvatarGroup from "./AvatarGroup";
-import ToolTip from "./ToolTip";
+import DropdownMenu from "./DropdownMenu";
 import { useContext } from "react";
 import { Controller } from "react-hook-form";
 import { TabListContext } from "@/views/Home/CreateGroupChat";
+
 type PeopleProps = {
     isOwner?: Boolean;
     isPeopleGroup?: Boolean;
@@ -17,6 +18,10 @@ type PeopleProps = {
     avatar?: string;
     avatars?: string[];
     Svg?: React.ReactElement;
+    peopleData?: any;
+    menuItems?: any[];
+    handleEvents?: any[];
+    direction?: "dropup" | "dropdown" | "dropstart" | "dropend";
 };
 
 const People = ({
@@ -30,6 +35,10 @@ const People = ({
     avatar,
     avatars,
     Svg,
+    peopleData,
+    menuItems,
+    handleEvents,
+    direction,
 }: PeopleProps) => {
     const { control } = useContext(TabListContext);
 
@@ -58,7 +67,10 @@ const People = ({
                     ) : (
                         <>
                             <Col className="col-auto">
-                                <Avatar avatar={avatar as string} />
+                                <Avatar
+                                    avatar={avatar as string}
+                                    peopleData={peopleData}
+                                />
                             </Col>
                             <Col>{name}</Col>
                         </>
@@ -85,7 +97,11 @@ const People = ({
                             </FormGroup>
                         ) : (
                             // <ThreeDotsVerticalSvg />
-                            <ToolTip />
+                            <DropdownMenu
+                                direction={direction ?? "dropdown"}
+                                menuItems={menuItems ?? []}
+                                handleEvents={handleEvents ?? []}
+                            />
                         )}
                     </Col>
                 </Row>

@@ -73,7 +73,7 @@ const NotificationList = () => {
         <>
             <div className="chat-list hidden-overflow px-4 bg-light">
                 <h2 className="fw-bold">通知</h2>
-                <Search />
+                {/* <Search /> */}
                 {allVerfiy.map((item: verifyInterface, index: number) => {
                     let result;
                     if (item.userId === userId && item.result) {
