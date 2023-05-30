@@ -118,6 +118,7 @@ const Home = () => {
                             setIsDisplay,
                             peopleInfoToggle,
                             setPeopleData,
+                            setVisible,
                             socket,
                         }}
                     >

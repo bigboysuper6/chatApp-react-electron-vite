@@ -8,24 +8,24 @@ import { RootState } from "@/app/store";
 import { deleteRoom } from "@/api/group";
 import { deleteChatRoom } from "@/app/Slices/message";
 const ChatInfoHeader = () => {
-    const { setIsDisplay, socket } = useContext(ChatInfoContext);
+    const { setIsDisplay, socket, setVisible } = useContext(ChatInfoContext);
     const dispatch = useDispatch();
     const currentRoom = useSelector<RootState, string>((state) => {
         return state.message.value.currentRoom;
     });
     const handleDelete = async () => {
-        const roomId = await deleteRoom(currentRoom).then((res) => {
-            return res.data.roomId;
-        });
         if (socket.readyState === WebSocket.OPEN) {
             socket.send(
                 JSON.stringify({
                     type: "deleteRoom",
-                    roomId,
+                    roomId: currentRoom,
                 })
             );
         }
-        dispatch(deleteChatRoom({ roomId }));
+        await deleteRoom(currentRoom).then((res) => {
+            return res.data.roomId;
+        });
+        alert("成功解散群组");
     };
     const menuItems = ["解散群组"];
     const handleEvents = [handleDelete];

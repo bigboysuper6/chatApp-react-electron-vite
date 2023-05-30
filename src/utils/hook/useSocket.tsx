@@ -118,10 +118,18 @@ const useSocket = (url: string) => {
             } else if (type == "deleteFriend") {
                 dispatch(deleteChatRoom({ roomId }));
                 dispatch(deleteFriendLocal({ friendId: userId }));
-                setVisibleBox(false);
+                if (currentRoomRef.current == roomId) setVisibleBox(false);
             } else if (type == "deleteRoom") {
                 dispatch(deleteChatRoom({ roomId }));
-                setVisibleBox(false);
+                console.log(
+                    currentRoomRef.current,
+                    "deleteRoom",
+                    roomId,
+                    "deleteRoom"
+                );
+                if (currentRoomRef.current == roomId) {
+                    setVisibleBox(false);
+                }
             } else {
                 if (currentRoomRef.current === roomId)
                     dispatch(setMessages({ messages: [message] }));

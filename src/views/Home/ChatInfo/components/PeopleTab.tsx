@@ -13,7 +13,7 @@ const PeopleTab = () => {
         return state.message.value.groupInfo.owner;
     });
     const handleDelete = () => {
-        console.log("删除成员");
+        alert("成功删除成员");
     };
     const menuItems = ["删除成员"];
     const handleEvents = [handleDelete];

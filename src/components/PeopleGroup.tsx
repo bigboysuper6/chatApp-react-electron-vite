@@ -36,8 +36,7 @@ const PeopleGroup = ({
                 })
             );
         }
-        dispatch(deleteFriendLocal({ friendId }));
-        dispatch(deleteChatRoom({ roomId }));
+        console.log("成功删除好友");
     };
     const menuItems = ["删除好友"];
     const handleEvents = [handleDelete];
