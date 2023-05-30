@@ -64,8 +64,8 @@ const ChatCard = ({
             group: isGroup ?? false,
             updatedAt: Date.now(),
         }).then((res) => res.data.verify);
-
-        if (!isGroup) {
+        console.log(verify);
+        if (!verify.group) {
             await addFriend({ friendId, roomId });
         } else {
             await addGroup({
