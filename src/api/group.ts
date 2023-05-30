@@ -9,5 +9,7 @@ const groupMembers = (data: data) => {
     const params = convertToUrlParams(data);
     return request.service.get("/group/group-info", { params });
 };
-
-export { addGroup, groupMembers };
+const deleteRoom = (id: string) => {
+    return request.service.delete(`group/${id}`);
+};
+export { addGroup, groupMembers, deleteRoom };

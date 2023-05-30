@@ -119,6 +119,9 @@ const useSocket = (url: string) => {
                 dispatch(deleteChatRoom({ roomId }));
                 dispatch(deleteFriendLocal({ friendId: userId }));
                 setVisibleBox(false);
+            } else if (type == "deleteRoom") {
+                dispatch(deleteChatRoom({ roomId }));
+                setVisibleBox(false);
             } else {
                 if (currentRoomRef.current === roomId)
                     dispatch(setMessages({ messages: [message] }));

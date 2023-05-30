@@ -3,10 +3,29 @@ import { ReactComponent as ThreeDotsVerticalSvg } from "@assets/threeDotsVertica
 import { ChatInfoContext } from "..";
 import { useContext } from "react";
 import DropdownMenu from "@/components/DropdownMenu";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/app/store";
+import { deleteRoom } from "@/api/group";
+import { deleteChatRoom } from "@/app/Slices/message";
 const ChatInfoHeader = () => {
-    const { setIsDisplay } = useContext(ChatInfoContext);
-    const handleDelete = () => {
-        console.log("解散群组");
+    const { setIsDisplay, socket } = useContext(ChatInfoContext);
+    const dispatch = useDispatch();
+    const currentRoom = useSelector<RootState, string>((state) => {
+        return state.message.value.currentRoom;
+    });
+    const handleDelete = async () => {
+        const roomId = await deleteRoom(currentRoom).then((res) => {
+            return res.data.roomId;
+        });
+        if (socket.readyState === WebSocket.OPEN) {
+            socket.send(
+                JSON.stringify({
+                    type: "deleteRoom",
+                    roomId,
+                })
+            );
+        }
+        dispatch(deleteChatRoom({ roomId }));
     };
     const menuItems = ["解散群组"];
     const handleEvents = [handleDelete];
