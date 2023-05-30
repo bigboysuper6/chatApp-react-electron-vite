@@ -39,36 +39,41 @@ const NotificationList = () => {
                 return copyItem;
             }
         });
-        return [...senderVerify, ...verify]
-            .filter((item: any) => item !== undefined)
-            .filter((item, index, self) => {
-                // 查找当前元素之后是否存在与当前元素roomId和createAt相同的元素
-                const duplicateIndex = self.findIndex(
-                    (other, otherIndex) =>
-                        other.roomId === item.roomId &&
-                        other.createAt === item.createAt &&
-                        other.result === item.result &&
-                        otherIndex > index
-                );
-                // 如果找到重复元素，则返回false，表示当前元素不会被保留
-                return duplicateIndex === -1;
-            })
-            .sort((a, b) => {
-                let compareA, compareB;
-                if (typeof a.result == "boolean") {
-                    compareA = a.updatedAt;
-                } else {
-                    compareA = a.createdAt;
-                }
-                if (typeof b.result == "boolean") {
-                    compareB = b.updatedAt;
-                } else {
-                    compareB = b.createdAt;
-                }
-                return compareB - compareA;
-            });
+        console.log([...senderVerify, ...verify], "allVerfiy");
+        const allVerfiy = [...senderVerify, ...verify];
+
+        return allVerfiy.filter((item: any) => item !== undefined);
+        // .sort((a, b) => {
+        //     let compareA, compareB;
+        //     if (typeof a.result == "boolean") {
+        //         compareA = new Date(a.updatedAt);
+        //     } else {
+        //         compareA = new Date(a.createdAt);
+        //     }
+        //     if (typeof b.result == "boolean") {
+        //         compareB = new Date(b.updatedAt);
+        //     } else {
+        //         compareB = new Date(b.createdAt);
+        //     }
+        //     console.log(compareB > compareA, "compareB - compareA");
+        //     return compareB < compareA;
+        // });
+        // .filter((item, index, self) => {
+        //     // 查找当前元素之后是否存在与当前元素roomId和createAt相同的元素
+        //     const duplicateIndex = self.findIndex(
+        //         (other, otherIndex) =>
+        //             other.roomId === item.roomId &&
+        //             other.createAt === item.createAt &&
+        //             other.result === item.result &&
+        //             otherIndex > index
+        //     );
+        //     // 如果找到重复元素，则返回false，表示当前元素不会被保留
+        //     return duplicateIndex === -1;
+        // });
     })();
     console.log(allVerfiy, "allVerfiy");
+    console.log(verify, "verify");
+
     return (
         <>
             <div className="chat-list hidden-overflow px-4 bg-light">

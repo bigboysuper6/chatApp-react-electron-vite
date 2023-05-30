@@ -12,7 +12,7 @@ const friend = (data: data) => {
 };
 
 const deleteFriend = (id: string) => {
-    return request.service.get(`friend/${id}`);
+    return request.service.delete(`friend/${id}`);
 };
 
 export { addFriend, friend, deleteFriend };

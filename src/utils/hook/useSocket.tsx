@@ -105,6 +105,7 @@ const useSocket = (url: string) => {
                                 content,
                                 createdAt: Date.now(),
                                 roomId,
+                                recevierId,
                                 groupName,
                             })
                         );
