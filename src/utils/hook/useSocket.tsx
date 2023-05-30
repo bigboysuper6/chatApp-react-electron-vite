@@ -69,6 +69,7 @@ const useSocket = (url: string) => {
                 groupName,
                 verify,
                 rooms,
+                friendId,
             } = message;
 
             if (type === "verify") {
@@ -113,7 +114,7 @@ const useSocket = (url: string) => {
                 }
             } else if (type == "deleteFriend") {
                 dispatch(deleteChatRoom({ roomId }));
-                dispatch(deleteFriendLocal({ friendId: userId }));
+                dispatch(deleteFriendLocal({ friendId }));
             } else {
                 if (currentRoomRef.current === roomId)
                     dispatch(setMessages({ messages: [message] }));

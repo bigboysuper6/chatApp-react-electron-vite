@@ -78,8 +78,8 @@ const FriendList = ({ socket, rooms }: IFriendListProps) => {
                 {friends.map((item: any) => {
                     return (
                         <PeopleGroup
-                            groupArr={item.groupArr}
-                            groupName={item.letter}
+                            groupArr={item?.groupArr}
+                            groupName={item?.letter}
                         />
                     );
                 })}

@@ -43,14 +43,13 @@ export const userSlice = createSlice({
         },
         deleteFriend: (state, action) => {
             const { friendId } = action.payload;
-            state.value.userInfo.friends = state.value.userInfo.friends.map(
-                (item: any) => {
-                    item.groupArr = item.groupArr.filter(
-                        (cur: any) => cur._id !== friendId
-                    );
-                    return item;
-                }
-            );
+            state.value.friends = state.value.friends.map((item: any) => {
+                item.groupArr = item.groupArr.filter(
+                    (cur: any) => cur._id !== friendId
+                );
+                console.log(item, "delete");
+                if (item.groupArr.length > 0) return item;
+            });
         },
     },
 });

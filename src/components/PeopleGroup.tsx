@@ -18,20 +18,24 @@ const PeopleGroup = ({
 }: PeopleGroupProps) => {
     const { socket } = useContext(AsideContext);
     const dispatch = useDispatch();
-
+    const userId = useSelector((state: any) => {
+        return state.user.value.userInfo._id;
+    });
     const handleDelete = async (friendId: string) => {
         console.log("删除好友");
         const roomId = await deleteFriend(friendId).then((res) => {
             return res.data.room._id;
         });
-        const userId = useSelector((state: any) => {
-            return state.user.value.userInfo._id;
-        });
         dispatch(deleteChatRoom({ roomId }));
         dispatch(deleteFriendLocal({ friendId }));
         if (socket.readyState === WebSocket.OPEN) {
             socket.send(
-                JSON.stringify({ type: "deleteFriend", userId, roomId })
+                JSON.stringify({
+                    type: "deleteFriend",
+                    friendId,
+                    userId,
+                    roomId,
+                })
             );
         }
     };
