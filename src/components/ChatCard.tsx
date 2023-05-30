@@ -2,7 +2,7 @@ import { Card, CardBody, Row, Col, CardFooter } from "reactstrap";
 import ChatInfoRow from "@/components/ChatInfoRow";
 import { ReactComponent as ThreeDots } from "@assets/threeDots.svg";
 import Avatar from "@/components/Avatar";
-import { useCallback, useState, useContext } from "react";
+import { useCallback, useState, useContext, useEffect } from "react";
 import { sendVerifyResult } from "@/api/message";
 import { addChatRooms } from "@/app/Slices/message";
 import { addFriend } from "@/api/friend";
@@ -43,7 +43,11 @@ const ChatCard = ({
     membersAvatars,
     membersNumber,
 }: ChatCardProps) => {
+    console.log(theResult, "theResult");
     const [result, setResult] = useState(theResult);
+    useEffect(() => {
+        setResult(theResult);
+    }, [theResult]);
     const dispatch = useDispatch();
     const userId = useSelector((state: any) => {
         return state.user.value.userInfo._id;

@@ -84,7 +84,13 @@ const NotificationList = () => {
                     } else {
                         result = item.result;
                     }
-                    console.log(item.groupName, item.roomId);
+                    console.log(
+                        item.userId,
+                        userId,
+                        item.result,
+                        result,
+                        "itemuserId"
+                    );
                     return (
                         <>
                             <ChatCard
