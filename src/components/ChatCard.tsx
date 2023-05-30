@@ -65,7 +65,7 @@ const ChatCard = ({
             updatedAt: Date.now(),
         }).then((res) => res.data.verify);
 
-        if (!verify.group) {
+        if (!isGroup) {
             await addFriend({ friendId, roomId });
         } else {
             await addGroup({
