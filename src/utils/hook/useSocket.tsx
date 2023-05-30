@@ -114,7 +114,7 @@ const useSocket = (url: string) => {
                 }
             } else if (type == "deleteFriend") {
                 dispatch(deleteChatRoom({ roomId }));
-                dispatch(deleteFriendLocal({ friendId }));
+                dispatch(deleteFriendLocal({ friendId: userId }));
             } else {
                 if (currentRoomRef.current === roomId)
                     dispatch(setMessages({ messages: [message] }));
