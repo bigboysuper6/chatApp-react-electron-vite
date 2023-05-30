@@ -20,6 +20,9 @@ const useSocket = (url: string) => {
     const userIndex = useSelector((state: any) => {
         return state.user.value.userInfo;
     });
+
+    const [visibleBox, setVisibleBox] = useState<false | null>(null);
+
     const currentRoomRef = useRef<string>(currentRoom);
     const userIndexRef = useRef<string>(userIndex);
     const timeoutRef = useRef<null | NodeJS.Timeout>(null);
@@ -115,6 +118,7 @@ const useSocket = (url: string) => {
             } else if (type == "deleteFriend") {
                 dispatch(deleteChatRoom({ roomId }));
                 dispatch(deleteFriendLocal({ friendId: userId }));
+                setVisibleBox(false);
             } else {
                 if (currentRoomRef.current === roomId)
                     dispatch(setMessages({ messages: [message] }));
@@ -158,7 +162,7 @@ const useSocket = (url: string) => {
         }, 3000);
     };
 
-    return [socket];
+    return [socket, visibleBox];
 };
 
 export default useSocket;

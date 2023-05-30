@@ -26,14 +26,14 @@ const Home = () => {
     const [isDisplay, setIsDisplay] = useState(false);
     const [visible, setVisible] = useState(false);
     const [active, handleActive] = useActive(0);
-    const [socket] = useSocket(import.meta.env.VITE_APP_SOCKET_URL);
+    const [socket, visibleBox] = useSocket(import.meta.env.VITE_APP_SOCKET_URL);
     console.log(socket, "socket");
     const dispatch = useDispatch();
     const [peopleInfoModal, peopleInfoToggle] = useOpen(false);
     const [imagePreviewModal, imagePreviewToggle] = useOpen(false);
     const [peopleData, setPeopleData] = useState({});
     const [img, setImg] = useState("");
-
+    console.log(visible, "visible");
     const AsideComponents = [
         <ChatList />,
         <FriendList socket={socket} />,
@@ -43,9 +43,9 @@ const Home = () => {
         <SettingList />,
     ];
 
-    // useEffect(() => {
-    //     if (!visible) setIsDisplay(false);
-    // }, [visible]);
+    useEffect(() => {
+        if (visibleBox == false) setVisible(false);
+    }, [visibleBox]);
 
     useEffect(() => {
         getFriends();

@@ -26,8 +26,6 @@ const PeopleGroup = ({
         const roomId = await deleteFriend(friendId).then((res) => {
             return res.data.room._id;
         });
-        dispatch(deleteChatRoom({ roomId }));
-        dispatch(deleteFriendLocal({ friendId }));
         if (socket.readyState === WebSocket.OPEN) {
             socket.send(
                 JSON.stringify({
@@ -38,6 +36,8 @@ const PeopleGroup = ({
                 })
             );
         }
+        dispatch(deleteFriendLocal({ friendId }));
+        dispatch(deleteChatRoom({ roomId }));
     };
     const menuItems = ["删除好友"];
     const handleEvents = [handleDelete];
