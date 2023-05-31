@@ -62,7 +62,6 @@ const ChatCard = ({
     const onClickAgree = async () => {
         setResult(true);
         dispatch(setVerifyResult({ roomId }));
-        console.log(item, "item", index);
         const verify = await sendVerifyResult({
             result: true,
             roomId,

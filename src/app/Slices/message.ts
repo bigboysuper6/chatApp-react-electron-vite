@@ -96,7 +96,7 @@ export const messageSlice = createSlice({
         setVerifyResult: (state, action) => {
             const { roomId } = action.payload;
             state.value.verify = state.value.verify.map((item: any) => {
-                if ((item.roomId = roomId)) item.result = true;
+                if (item.roomId == roomId) item.result = true;
                 return item;
             });
         },
