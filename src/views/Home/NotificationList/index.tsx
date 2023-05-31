@@ -2,12 +2,13 @@ import Search from "@/components/Search";
 import ChatCard from "@/components/ChatCard";
 import { useSelector, useDispatch } from "react-redux";
 import { getVerify } from "@/api/message";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { setVerify, resetVerify } from "@/app/Slices/message";
 
 const NotificationList = () => {
     const { verify } = useSelector((state: any) => state.message.value);
 
+    const [allVerfiy, setAllVerfiy] = useState<any>([]);
     const userId = useSelector((state: any) => {
         return state.user.value.userInfo._id;
     });
@@ -30,7 +31,7 @@ const NotificationList = () => {
         });
     };
 
-    const allVerfiy = (() => {
+    useEffect(() => {
         const senderVerify = verify.map((item: any) => {
             if (item.userId === userId && typeof item.result == "boolean") {
                 const copyItem = { ...item };
@@ -38,7 +39,7 @@ const NotificationList = () => {
                 return copyItem;
             }
         });
-        return [...senderVerify, ...verify]
+        const newVerify = [...senderVerify, ...verify]
             .filter((item: any) => item !== undefined)
             .filter((item, index, self) => {
                 // 查找当前元素之后是否存在与当前元素roomId和createAt相同的元素
@@ -66,7 +67,9 @@ const NotificationList = () => {
                 }
                 return Date.parse(compareB) - Date.parse(compareA);
             });
-    })();
+        setAllVerfiy(newVerify);
+    }, [verify]);
+
     console.log(allVerfiy, "allVerfiy");
     return (
         <>
@@ -74,6 +77,7 @@ const NotificationList = () => {
                 <h2 className="fw-bold">通知</h2>
                 {/* <Search /> */}
                 {allVerfiy.map((item: verifyInterface, index: number) => {
+                    console.log(item, index, "item");
                     let result;
                     if (item.userId === userId && item.result) {
                         result = "recevierAgree";
@@ -84,13 +88,6 @@ const NotificationList = () => {
                     } else {
                         result = item.result;
                     }
-                    console.log(
-                        item.userId,
-                        userId,
-                        item.result,
-                        result,
-                        "itemuserId"
-                    );
                     return (
                         <>
                             <ChatCard
@@ -126,6 +123,8 @@ const NotificationList = () => {
                                         ? item.recevierAvatar
                                         : item.senderAvatar
                                 }
+                                item={item}
+                                index={index}
                             />
                         </>
                     );

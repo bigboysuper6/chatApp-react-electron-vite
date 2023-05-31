@@ -25,6 +25,8 @@ type ChatCardProps = {
     avatar?: string;
     membersAvatars?: string[];
     membersNumber?: string;
+    item?: any;
+    index?: number;
 };
 
 const ChatCard = ({
@@ -42,9 +44,10 @@ const ChatCard = ({
     avatar,
     membersAvatars,
     membersNumber,
+    item,
+    index,
 }: ChatCardProps) => {
-    console.log(theResult, "theResult");
-    const [result, setResult] = useState(theResult);
+    const [result, setResult] = useState<any>(null);
     useEffect(() => {
         setResult(theResult);
     }, [theResult]);
@@ -55,8 +58,9 @@ const ChatCard = ({
     const { socket } = useContext(AsideContext);
 
     //need check
-    const onClickAgree = useCallback(async () => {
+    const onClickAgree = async () => {
         setResult(true);
+        console.log(item, "item", index);
         const verify = await sendVerifyResult({
             result: true,
             roomId,
@@ -64,7 +68,6 @@ const ChatCard = ({
             group: isGroup ?? false,
             updatedAt: Date.now(),
         }).then((res) => res.data.verify);
-        console.log(verify);
         if (!verify.group) {
             await addFriend({ friendId, roomId });
         } else {
@@ -75,20 +78,18 @@ const ChatCard = ({
                 purpose: verify.content,
             });
         }
-
         const rooms = await getRoom({ roomId: verify.roomId }).then((res) => {
             const verify = res.data.roomsAgree;
             console.log(verify, userId, "verify");
             return verify;
         });
-        console.log(rooms);
         if (socket.readyState === WebSocket.OPEN) {
             socket.send(JSON.stringify({ verify, type: "verify", rooms }));
         }
         dispatch(addChatRooms({ room: rooms }));
-    }, []);
+    };
 
-    const onClickRefuse = useCallback(async () => {
+    const onClickRefuse = async () => {
         setResult(false);
         const verify = await sendVerifyResult({
             result: false,
@@ -101,7 +102,7 @@ const ChatCard = ({
         if (socket.readyState === WebSocket.OPEN) {
             socket.send(JSON.stringify({ verify, type: "verify" }));
         }
-    }, []);
+    };
 
     return (
         <>
