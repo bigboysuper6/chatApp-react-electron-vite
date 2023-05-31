@@ -93,6 +93,13 @@ export const messageSlice = createSlice({
                 }
             );
         },
+        setVerifyResult: (state, action) => {
+            const { roomId } = action.payload;
+            state.value.verify = state.value.verify.map((item: any) => {
+                if ((item.roomId = roomId)) item.result = true;
+                return item;
+            });
+        },
     },
 });
 
@@ -108,6 +115,7 @@ export const {
     setGroupInfo,
     addChatRooms,
     deleteChatRoom,
+    setVerifyResult,
 } = messageSlice.actions;
 
 export default messageSlice.reducer;

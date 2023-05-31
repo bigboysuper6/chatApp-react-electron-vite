@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { AsideContext } from "@/views/Home";
 import { addGroup } from "@/api/group";
 import { getRoom } from "@/api/message";
+import { setVerifyResult } from "@/app/Slices/message";
 type ChatCardProps = {
     isGroup?: boolean;
     isNotification?: Boolean;
@@ -60,6 +61,7 @@ const ChatCard = ({
     //need check
     const onClickAgree = async () => {
         setResult(true);
+        dispatch(setVerifyResult({ roomId }));
         console.log(item, "item", index);
         const verify = await sendVerifyResult({
             result: true,
