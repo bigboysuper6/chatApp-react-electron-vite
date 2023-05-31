@@ -38,7 +38,7 @@ const useSocket = (url: string) => {
 
     useEffect(() => {
         currentRoomRef.current = currentRoom;
-        userIndexRef.current = userIndex;
+        userIndexRef.current = userIndex._id;
     }, [currentRoom, userIndex]);
 
     const createSocket = () => {
