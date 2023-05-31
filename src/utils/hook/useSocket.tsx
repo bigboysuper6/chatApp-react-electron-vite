@@ -77,11 +77,10 @@ const useSocket = (url: string) => {
 
             if (type === "verify") {
                 console.log(message);
-                if (recevierId !== userIndexRef.current)
-                    if (verify == true) dispatch(setVerify(message));
-                    else {
-                        dispatch(setVerify(verify));
-                    }
+                if (verify == true) dispatch(setVerify(message));
+                else {
+                    dispatch(setVerify(verify));
+                }
                 if (verify !== true && verify.result === true)
                     dispatch(addChatRooms({ room: rooms }));
             } else if (type === "join") {
