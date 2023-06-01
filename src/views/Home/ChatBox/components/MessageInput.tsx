@@ -97,6 +97,11 @@ const MessageInput = () => {
         }
     };
 
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === "Enter") {
+            event.preventDefault(); // 阻止默认行为
+        }
+    };
     return (
         <>
             <Form
@@ -116,7 +121,7 @@ const MessageInput = () => {
                     />
                     <button
                         className="btn btn-icon"
-                        type="submit"
+                        type="button"
                         onClick={handleInputClick}
                     >
                         <SelectFileSvg />

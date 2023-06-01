@@ -72,12 +72,13 @@ const ChatCard = ({
         if (!verify.group) {
             await addFriend({ friendId, roomId });
         } else {
-            await addGroup({
-                roomId,
-                createAt: Date.now(),
-                name: groupName,
-                purpose: verify.content,
-            });
+            if (groupName !== undefined && groupName !== "undefined")
+                await addGroup({
+                    roomId,
+                    createAt: Date.now(),
+                    name: groupName,
+                    purpose: verify.content,
+                });
         }
         const rooms = await getRoom({ roomId: verify.roomId }).then((res) => {
             const verify = res.data.roomsAgree;

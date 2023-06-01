@@ -39,7 +39,12 @@ const CreateGroupChat = ({ socket }: CreateGroupChatProps) => {
             })
             .filter((item: any) => item !== undefined);
         console.log(selectedIds);
-        if (groupName !== "" && purpose !== "" && selectedIds.length > 0) {
+        console.log(groupName, purpose);
+        if (
+            groupName !== undefined &&
+            purpose !== undefined &&
+            selectedIds.length > 0
+        ) {
             if (socket.readyState === WebSocket.OPEN) {
                 socket.send(
                     JSON.stringify({

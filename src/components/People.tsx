@@ -101,8 +101,9 @@ const People = ({
                                 />
                             </FormGroup>
                         ) : (
-                            groupInfo?.isGroup &&
-                            groupInfo.owner._id == userId && (
+                            ((groupInfo?.isGroup &&
+                                groupInfo.owner._id == userId) ||
+                                isFiles) && (
                                 <DropdownMenu
                                     direction={direction ?? "dropdown"}
                                     menuItems={menuItems ?? []}

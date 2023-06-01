@@ -139,13 +139,31 @@ const Message = ({
                 <div>
                     <Avatar avatar={avatar} />
                 </div>
+
                 <div
                     className={`d-flex flex-column message-body ${
                         isUser == true ? "me-3" : "ms-3"
                     } `}
                 >
-                    <MessageContent />
-                    <div className="message-time-text">{createdAt}</div>
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: `${
+                                isUser == true ? "flex-end" : "flex-start"
+                            }`,
+                            wordBreak: "break-word",
+                        }}
+                    >
+                        <MessageContent />
+                    </div>
+                    <div
+                        className="message-time-text"
+                        style={{
+                            textAlign: `${isUser == true ? "right" : "left"}`,
+                        }}
+                    >
+                        {createdAt}
+                    </div>
                 </div>
             </div>
         </>
