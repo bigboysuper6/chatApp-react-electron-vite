@@ -13,6 +13,10 @@ const ChatInfoHeader = () => {
     const currentRoom = useSelector<RootState, string>((state) => {
         return state.message.value.currentRoom;
     });
+    const groupInfo = useSelector<RootState, any>((state) => {
+        return state.message.value.groupInfo;
+    });
+    const userId = useSelector((state: any) => state.user.value.userInfo._id);
     const handleDelete = async () => {
         if (socket.readyState === WebSocket.OPEN) {
             socket.send(
@@ -29,6 +33,7 @@ const ChatInfoHeader = () => {
     };
     const menuItems = ["解散群组"];
     const handleEvents = [handleDelete];
+
     return (
         <>
             <div className="chat-info-header pb-4 border-bottom">
@@ -37,11 +42,14 @@ const ChatInfoHeader = () => {
                         <ArrowLeftSvg onClick={() => setIsDisplay(false)} />
                     </div>
                     <div>
-                        <DropdownMenu
-                            menuItems={menuItems}
-                            handleEvents={handleEvents}
-                            direction={"dropstart"}
-                        />
+                        {groupInfo?.isGroup &&
+                            groupInfo.owner._id == userId && (
+                                <DropdownMenu
+                                    menuItems={menuItems}
+                                    handleEvents={handleEvents}
+                                    direction={"dropstart"}
+                                />
+                            )}
                     </div>
                 </div>
             </div>

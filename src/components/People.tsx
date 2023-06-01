@@ -6,6 +6,8 @@ import DropdownMenu from "./DropdownMenu";
 import { useContext } from "react";
 import { Controller } from "react-hook-form";
 import { TabListContext } from "@/views/Home/CreateGroupChat";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/store";
 
 type PeopleProps = {
     isOwner?: Boolean;
@@ -41,7 +43,10 @@ const People = ({
     direction,
 }: PeopleProps) => {
     const { control } = useContext(TabListContext);
-
+    const groupInfo = useSelector<RootState, any>((state) => {
+        return state.message.value.groupInfo;
+    });
+    const userId = useSelector((state: any) => state.user.value.userInfo._id);
     return (
         <>
             <div
@@ -96,12 +101,14 @@ const People = ({
                                 />
                             </FormGroup>
                         ) : (
-                            // <ThreeDotsVerticalSvg />
-                            <DropdownMenu
-                                direction={direction ?? "dropdown"}
-                                menuItems={menuItems ?? []}
-                                handleEvents={handleEvents ?? []}
-                            />
+                            groupInfo?.isGroup &&
+                            groupInfo.owner._id == userId && (
+                                <DropdownMenu
+                                    direction={direction ?? "dropdown"}
+                                    menuItems={menuItems ?? []}
+                                    handleEvents={handleEvents ?? []}
+                                />
+                            )
                         )}
                     </Col>
                 </Row>
