@@ -103,7 +103,8 @@ const People = ({
                         ) : (
                             ((groupInfo?.isGroup &&
                                 groupInfo.owner._id == userId) ||
-                                isFiles) && (
+                                isFiles ||
+                                isPeopleGroup) && (
                                 <DropdownMenu
                                     direction={direction ?? "dropdown"}
                                     menuItems={menuItems ?? []}
