@@ -26,6 +26,7 @@ const CreateGroupChat = ({ socket }: CreateGroupChatProps) => {
 
     const onSubmit = async (data: any) => {
         const { groupName, purpose } = data;
+        console.log(friends);
         const selectedIds = Object.keys(data)
             .map((item: any) => {
                 if (item.includes("friend-selected-") && data[item] === true) {
@@ -34,7 +35,7 @@ const CreateGroupChat = ({ socket }: CreateGroupChatProps) => {
                     const groupIndex = friendIndex.slice(1);
                     return friends.find((item: any) => {
                         return item.letter === letter;
-                    }).groupArr[groupIndex]._id;
+                    })?.groupArr[groupIndex]?._id;
                 }
             })
             .filter((item: any) => item !== undefined);
